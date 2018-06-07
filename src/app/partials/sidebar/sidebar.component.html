@@ -1,0 +1,17 @@
+<div id="sidebar" [class.collapsed]="sidebarCollapsed$ | async">
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <img src="/assets/logo.svg">
+    </div>
+    <div class="brand-title">Ajmah<span class="font-light">Admin</span></div>
+  </div>
+  <ul class="sidebar-nav">
+    <li *ngFor="let item of navItems">
+      <a [routerLink]="item.link" routerLinkActive="active" class="nav-link">
+        <i class="nav-link-icon material-icons md-18">{{item.icon}}</i>
+        <span class="nav-link-text">{{item.text}}</span>
+        <span class="nav-link-tooltip">{{item.text}}</span>
+      </a>
+    </li>
+  </ul>
+</div>

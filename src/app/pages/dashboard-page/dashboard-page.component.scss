@@ -1,0 +1,8 @@
+@import "../../app-theme.scss";
+
+.container {
+  @include flex;
+  #main {
+    flex: 1;
+  }
+}

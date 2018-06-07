@@ -1,0 +1,20 @@
+@import "../../app-theme.scss";
+
+#titlebar {
+  @include flex;
+  align-items: center;
+  height: $app-titlebar-height;
+  //@include app-padding;
+  background: color(light);
+  border-bottom: $app-border-width solid $app-divider;
+
+  button.titlebar-icon-btn {
+    background: transparent;
+    color: $app-text-secondary;
+    @include app-transition(all);
+    &:hover {
+      color: $app-text;
+      //background: transparentize(color(primary), 0.9);
+    }
+  }
+}

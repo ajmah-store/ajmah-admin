@@ -1,0 +1,121 @@
+@import "../../app-theme.scss";
+
+#sidebar {
+  width: 200px + $app-border-width;
+  height: 100vh;
+  background: color(light);
+  border-right: $app-border-width solid $app-divider;
+  @include app-transition(width);
+  overflow-x: visible;
+
+  &.collapsed {
+    width: $app-titlebar-height;
+    .sidebar-brand {
+      .brand-title {
+        width: 0;
+      }
+    }
+    ul.sidebar-nav li a.nav-link {
+      @include tooltip('.nav-link-tooltip','right',16px,tooltip-anim-drop);
+      .nav-link-icon {
+        margin: 0 !important;
+        font-size: 24px;
+      }
+      .nav-link-text {
+        display: none;
+      }
+    }
+  }
+
+  .sidebar-brand {
+    @include app-padding;
+    border-bottom: $app-border-width solid $app-divider;
+    height: $app-titlebar-height;
+    @include flex;
+    align-items: center;
+    justify-content: center;
+
+    .brand-icon {
+      width: 24px;
+      height: 24px;
+      margin-right: auto;
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .brand-title {
+      @include brand;
+      width: 128px;
+      overflow: hidden;
+      text-align: center;
+      color: color(dark);
+      font-weight: 500;
+      font-size: 1.2em;
+      word-break: keep-all;
+      @include app-transition(width);
+    }
+  }
+
+  ul.sidebar-nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-top: padding(1);
+    //Icon Colors
+    $i: 1;
+    @each $c in $nav-icon-colors {
+      li:nth-child(#{length($nav-icon-colors)}n+#{$i}) {
+        .nav-link .nav-link-icon {
+          color: $c;
+        }
+      }
+      $i:$i + 1;
+    }
+
+    //
+    li {
+      padding: padding(0.5);
+      .nav-link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        padding: padding(0.5);
+        @include app-border-radius;
+        @include app-transition(background);
+
+        &:hover {
+          background: transparentize(color(primary), 0.9);
+          .nav-link-text {
+            color: $app-text;
+          }
+        }
+
+        &.active {
+          background: color(primary);
+          .nav-link-icon, .nav-link-text {
+            color: color(light);
+          }
+        }
+
+        .nav-link-icon {
+          margin-right: padding(1);
+          @include app-transition(font-size, 0.1s, 0.2s);
+        }
+
+        .nav-link-text {
+          color: $app-text-secondary;
+          font-weight: 500;
+          font-size: 0.9em;
+          @include app-transition(color);
+        }
+
+        .nav-link-tooltip {
+          display: none;
+        }
+      }
+    }
+  }
+}

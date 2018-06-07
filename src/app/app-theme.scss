@@ -1,0 +1,180 @@
+/**
+*  App Theme Start Here
+*/
+$app-primary: #d82446;
+$app-accent: lighten($app-primary, 20%);
+$app-light: #FCFCFC;
+$app-dark: #212121;
+
+$app-primary-dark: darken($app-primary, 10%);
+$app-primary-light: lighten($app-primary, 45%);
+//text
+$app-text: $app-dark;
+$app-text-secondary: lighten($app-text, 33%);
+//divider
+$app-divider: lighten($app-dark, 75%);
+//padding
+$app-padding: 16px;
+$app-padding-left: $app-padding;
+$app-padding-right: $app-padding;
+$app-padding-top: $app-padding;
+$app-padding-bottom: $app-padding;
+
+//borders
+$app-border-width: 1px;
+//border radius
+$app-border-radius: 4px;
+$app-border-top-left-radius: $app-border-radius;
+$app-border-top-right-radius: $app-border-radius;
+$app-border-bottom-left-radius: $app-border-radius;
+$app-border-bottom-right-radius: $app-border-radius;
+
+//typography
+$app-font-family: 'Roboto', sans-serif;
+$app-brand-font-family: 'Roboto', $app-font-family;
+//font-size
+$app-font-size: 14px;
+
+//transition
+$app-transition-duration: 0.3s;
+$app-transition-easing: ease-in-out;
+
+/////////
+//LISTS//
+/////////
+//colors
+$colors: (
+  primary: $app-primary,
+  accent: $app-accent,
+  dark: $app-dark,
+  light: $app-light,
+  danger: #f44336,
+  warn: #ff9800,
+  success: #4caf50,
+  info: #03a9f4,
+);
+
+//font-weights
+$font-weights: (
+  thin: 100,
+  light: 300,
+  regular: 400,
+  medium: 500,
+  bold: 700,
+  black: 900
+);
+
+//material-icons
+$icon-sizes: (
+  md-18: 18px,
+  md-24: 24px,
+  md-36: 36px,
+  md-48: 48px,
+);
+
+//nav icon $colors
+$nav-icon-colors: #f44336, #3f51b5, #e91e63, #607d8b, #4caf50, #03a9f4;
+
+/*
+* App Them Ends Here
+*
+*/
+
+//generated varaibles don't change
+$app-titlebar-height: 24px + 2*$app-padding + $app-border-width;
+
+//Functions
+//color
+@function color($name) {
+  @return map-get($colors, $name);
+}
+//padding
+@function padding($multiplier) {
+  @return $app-padding*$multiplier;
+}
+
+//mixins
+@mixin no-border-radius {
+  border-radius: 0px !important;
+}
+
+@mixin brand {
+  font-family: $app-brand-font-family;
+}
+
+@mixin no-brand {
+  font-family: $app-font-family !important;
+}
+
+@mixin elevation($height) {
+  box-shadow: $height $height $height*2.5 rgba(0,0,0,0.33), 0px 0px $height*2.5 rgba(0,0,0,0.23);
+}
+
+@mixin app-padding($mult:1) {
+  padding-left: $app-padding-left*$mult;
+  padding-top: $app-padding-top*$mult;
+  padding-right: $app-padding-right*$mult;
+  padding-bottom: $app-padding-bottom*$mult;
+}
+
+@mixin app-border-radius {
+  border-top-left-radius: $app-border-top-left-radius;
+  border-top-right-radius: $app-border-top-right-radius;
+  border-bottom-left-radius: $app-border-bottom-left-radius;
+  border-bottom-right-radius: $app-border-bottom-right-radius;
+}
+
+@mixin app-transition($property, $delay:0s, $duration: $app-transition-duration, $easing: $app-transition-easing) {
+  transition: $property $duration $easing $delay;
+}
+
+@mixin flex($direction:row) {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: $direction;
+  -webkit-flex-direction: $direction;
+}
+
+@mixin tooltip($selector, $pos, $offset, $anim:tooltip-anim-drop) {
+  #{$selector} {
+    position: absolute;
+    @if $pos == "left" {
+      right: calc(100% + #{$offset});
+    }
+    @else if $pos =="right" {
+      left: calc(100% + #{$offset});
+    }
+    @else if $pos == "bottom" {
+      top: calc(100% + #{$offset});
+    }
+    @else {
+      bottom: calc(100% + #{$offset});
+    }
+
+    @include app-border-radius;
+    border: $app-border-width solid $app-divider;
+    padding: padding(0.25);
+    color: color(dark);
+    background: color(light);
+    font-weight: 500;
+    display: none;
+    font-size: 0.8em;
+  }
+  &:hover {
+    #{$selector} {
+      display: block;
+      animation: $anim $app-transition-duration $app-transition-easing;
+    }
+  }
+}
+
+//animations
+@keyframes tooltip-anim-drop {
+  0% { transform: translateY(-100px); opacity: 0; }
+  100% { transform: translateY(0px); opacity: 1;  }
+}
+
+@keyframes tooltip-anim-slide {
+  0% { transform: translateX(-100px); opacity: 0; }
+  100% { transform: translateX(0px); opacity: 1;  }
+}

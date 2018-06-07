@@ -1,0 +1,64 @@
+@import "../../app-theme.scss";
+
+#productsPage {
+  position: relative;
+  @include flex(column);
+
+  .content {
+    flex: 1;
+  }
+
+  .action-bar {
+    @include flex(row-reverse);
+    align-items: center;
+    height: $app-titlebar-height;
+    background: color(light);
+    border-bottom: $app-border-width solid $app-divider;
+    @include app-padding(0.5);
+
+    .action-btn {
+      color: $app-text-secondary;
+      justify-content: center;
+      background: transparent;
+      position: relative;
+      padding: padding(0.5);
+      font-size: 0.9em;
+      @include app-transition(color);
+      @include tooltip('.action-tooltip', 'top', 16px, tooltip-anim-drop);
+      @include app-border-radius;
+
+      &:hover {
+        color: $app-text;
+        .action-tooltip {
+
+        }
+      }
+
+      &.icon-left {
+        .material-icons {
+          margin-right: padding(0.5);
+        }
+      }
+
+      &.imp {
+        background: color(primary);
+        color: color(light);
+        @include app-transition(background);
+        &:hover {
+          background: $app-primary-dark;
+        }
+      }
+    }
+  }//action-bar
+
+  .right-sidebar {
+    position: absolute;
+    right: 0px;
+    top: $app-titlebar-height;
+    width: 300px + $app-border-width;
+    height: calc(100% - #{$app-titlebar-height});
+    height: calc(100% -#{2*$app-titlebar-height});
+    background: color(light);
+    border-left: $app-border-width solid $app-divider;
+  }
+}

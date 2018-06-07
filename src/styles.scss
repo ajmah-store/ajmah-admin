@@ -1,1 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
+
+//@import url('https://fonts.googleapis.com/css?family=Righteous');
+
+@import "app/app-theme.scss";
+
+body {
+  width: 100%;
+  height: 100%;
+  color: color(dark);
+  font-family: $app-font-family;
+  font-size: 14px;
+}
+
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  outline: none;
+  &:focus { box-shadow: none; }
+}
+
+@each $name, $val in $colors {
+  .text-#{$name} {
+    color: $val;
+  }
+  .bg-#{$name} {
+    background: $val;
+  }
+}
+
+@each $name, $val in $font-weights {
+  .font-#{$name} {
+    font-weight: $val;
+  }
+}
+
+@each $name, $val in $icon-sizes {
+  .material-icons.#{$name} {
+    font-size: $val;
+  }
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  background: color(accent);
+  color: color(light);
+  font-family: $app-font-family;
+  @include app-padding;
+  @include app-border-radius;
+  font-weight: 500;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:active {
+    transform-origin: 50% 50%;
+    transform: scale(0.95,0.95);
+  }
+}
+
+.fill-page {
+  width: 100%;
+  height: calc(100% - #{$app-titlebar-height});
+}
