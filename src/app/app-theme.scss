@@ -2,7 +2,7 @@
 *  App Theme Start Here
 */
 $app-primary: #d82446;
-$app-accent: lighten($app-primary, 20%);
+$app-accent: $app-primary;
 $app-light: #FCFCFC;
 $app-dark: #212121;
 
@@ -135,7 +135,7 @@ $app-titlebar-height: 24px + 2*$app-padding + $app-border-width;
   -webkit-flex-direction: $direction;
 }
 
-@mixin tooltip($selector, $pos, $offset, $anim:tooltip-anim-drop) {
+@mixin tooltip($selector, $pos, $offset, $anim:tooltip-anim-drop, $delay:0s) {
   #{$selector} {
     position: absolute;
     @if $pos == "left" {
@@ -163,7 +163,9 @@ $app-titlebar-height: 24px + 2*$app-padding + $app-border-width;
   &:hover {
     #{$selector} {
       display: block;
-      animation: $anim $app-transition-duration $app-transition-easing;
+      opacity: 0;
+      animation: $anim $app-transition-duration $app-transition-easing $delay;
+      animation-fill-mode: forwards;
     }
   }
 }

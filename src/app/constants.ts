@@ -30,3 +30,8 @@ export const sidebarLinks = [
     "icon" : "person"
   },
 ];
+
+export const offCanvasFrames = {
+    addProduct: 1,
+    editProduct: 2
+};

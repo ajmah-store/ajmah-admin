@@ -1,0 +1,96 @@
+@import "../../app-theme.scss";
+
+.product-frame-content {
+  width: 100%;
+  @include app-padding(0.5);
+  @include flex(column);
+  align-items: center;
+
+  .product-general-details {
+    @include flex;
+    flex-wrap: wrap;
+    //align-items: center;
+    justify-content: center;
+
+      .featured-image-drop {
+        @include flex(column);
+        align-items: center;
+
+        .image-preview {
+          width: 200px;
+          .placeholder {
+            @include flex;
+            width: 200px;
+            height: 200px;
+            border: 3px dashed $app-divider;
+            @include app-border-radius;
+            @include app-transition(all);
+            cursor: pointer;
+
+            .align-center {
+              margin: auto;
+              color: $app-divider;
+              @include app-transition(color);
+            }
+
+            &:hover {
+              border-color: color(primary);
+              background: $app-primary-light;
+              .align-center { color: color(primary); }
+            }
+          }
+        }
+
+        .image-adjustment-tools {
+          @include flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          padding: padding(0.5);
+          .tool-btn {
+            position: relative;
+            padding: padding(0.25);
+            color: $app-text-secondary;
+            background: color(light);
+            border: $app-border-width solid $app-divider;
+            margin-right: padding(0.5);
+            @include app-transition(all);
+            @include tooltip('.img-tooltip', 'bottom', 4px, tooltip-anim-slide);
+
+            .img-tooltip {
+              font-size: 0.6em;
+            }
+
+            &:last-child {
+              margin-right: 0;
+            }
+
+            &:hover {
+              color: $app-text;
+            }
+
+            &.btn-done {
+              padding: padding(0.25) padding(1);
+              color: color(success);
+              border-color: color(success);
+              &:hover {
+                background: color(success);
+                color: color(light);
+              }
+            }
+          }
+        }
+
+        input[type='file'] {
+          display: none;
+        }
+      }//featured-image-drop
+
+      .product-details {
+        flex: 1;
+        min-width: 300px;
+        @include app-padding;
+      }//product-details
+
+  }
+}

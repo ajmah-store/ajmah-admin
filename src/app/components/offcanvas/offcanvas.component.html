@@ -1,0 +1,22 @@
+<div class="off-canvas-frame" [class.maximized]="maximized" [class.opened]="opened">
+  <div class="frame-title-bar">
+    <div class="frame-title">{{frameTitle}}</div>
+    <div class="frame-actions">
+      <button class="frame-action-btn" *ngIf="!maximized" (click)="maximize()">
+        <i class="material-icons md-18">maximize</i>
+        <span class="frame-action-tooltip">Maximize</span>
+      </button>
+      <button class="frame-action-btn" *ngIf="maximized" (click)="minimize()">
+        <i class="material-icons md-18">minimize</i>
+        <span class="frame-action-tooltip">Minimize</span>
+      </button>
+      <button class="frame-action-btn" (click)="close()">
+        <i class="material-icons md-18">close</i>
+        <span class="frame-action-tooltip">Close</span>
+      </button>
+    </div>
+  </div>
+  <div class="frame-content" data-simplebar>
+    <ng-content></ng-content>
+  </div>
+</div>

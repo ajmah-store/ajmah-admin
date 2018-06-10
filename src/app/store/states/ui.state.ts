@@ -1,14 +1,16 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { ExpandSidebar, CollapseSidebar, ToggleSidebar } from '../actions/ui.actions';
+import { ExpandSidebar, CollapseSidebar, ToggleSidebar, ChangeOffCanvas } from '../actions/ui.actions';
 
 export interface UIStateModel {
     sidebarCollapsed:boolean;
+    offCanvasOpened:number;
 }
 
 @State<UIStateModel>({
   name: 'ui',
   defaults: {
-    sidebarCollapsed: false
+    sidebarCollapsed: false,
+    offCanvasOpened: 0
   }
 })
 export class UIState {
@@ -16,6 +18,11 @@ export class UIState {
   @Selector()
   static getSidebarOpen(state: UIStateModel) {
     return state.sidebarCollapsed;
+  }
+
+  @Selector()
+  static getOpenedOffCanvas(state: UIStateModel) {
+    return state.offCanvasOpened;
   }
 
   @Action(ExpandSidebar)
@@ -37,6 +44,13 @@ export class UIState {
     const state = ctx.getState();
     ctx.patchState({
       sidebarCollapsed: !state.sidebarCollapsed
+    });
+  }
+
+  @Action(ChangeOffCanvas)
+  changeOffCanvas(ctx: StateContext<UIStateModel>, action: ChangeOffCanvas) {
+    ctx.patchState({
+      offCanvasOpened: action.payload
     });
   }
 }

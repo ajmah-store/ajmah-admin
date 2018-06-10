@@ -1,0 +1,20 @@
+@import "../../app-theme.scss";
+
+.input-grp {
+  padding: padding(0.5);
+  @include flex;
+  @include app-border-radius;
+  background: color(light);
+  border: $app-border-width solid $app-divider;
+
+  input {
+    border: none;
+    font-weight: 300;
+    flex: 1;
+    color: $app-text-secondary;
+    @include app-transition(color);
+    &:focus {
+      color: $app-text;
+    }
+  }
+}

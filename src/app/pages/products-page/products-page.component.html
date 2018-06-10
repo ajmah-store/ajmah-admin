@@ -1,11 +1,15 @@
 <div class="fill-page" id="productsPage">
   <div class="action-bar">
-    <button class="action-btn icon-left">
+    <button
+      class="action-btn icon-left"
+      [class.active]="isFrameOpened$(frameId.addProduct) | async"
+      (click)="openFrame(frameId.addProduct)">
+
       <i class="material-icons md-18">add</i> Add Product
+
     </button>
   </div>
   <div class="content">
   </div>
-  <div class="right-sidebar" id="addProduct">
-  </div>
+  <app-add-product></app-add-product>
 </div>

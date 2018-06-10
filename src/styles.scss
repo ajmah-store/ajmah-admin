@@ -61,7 +61,90 @@ button {
   }
 }
 
+input {
+  font-family: $app-font-family;
+}
+
 .fill-page {
   width: 100%;
   height: calc(100% - #{$app-titlebar-height});
+}
+
+//Croppie
+.cr-slider {
+
+  @mixin range-thumb {
+    width: padding(0.5);
+    height: padding(1);
+    @include app-border-radius;
+    background: color(primary);
+    cursor: pointer;
+    @include app-transition(all);
+    transform-origin: 50% 50%;
+  }
+
+  @mixin range-thumb-hover {
+    width: padding(1);
+  }
+
+  @mixin range-track {
+    height: 4px;
+    background: $app-divider;
+    @include app-transition(background);
+  }
+
+  @mixin range-track-hover {
+    background: color(dark);
+  }
+
+  //cross-browser
+  &::-webkit-slider-runnable-track  {
+    @include range-track;
+  }
+
+  &::-webkit-slider-thumb {
+    @include range-thumb;
+  }
+
+  &::-moz-range-track {
+    @include range-track;
+  }
+
+  &::-moz-range-thumb {
+    @include range-thumb;
+  }
+
+  &::-ms-track {
+    @include range-track;
+  }
+
+  &::-ms-thumb {
+    @include range-thumb;
+  }
+
+  &:hover {
+    &::-webkit-slider-runnable-track  {
+      @include range-track-hover;
+    }
+
+    &::-webkit-slider-thumb {
+      @include range-thumb-hover;
+    }
+
+    &::-moz-range-track {
+      @include range-track-hover;
+    }
+
+    &::-moz-range-thumb {
+      @include range-thumb-hover;
+    }
+
+    &::-ms-track {
+      @include range-track-hover;
+    }
+
+    &::-ms-thumb {
+      @include range-thumb-hover;
+    }
+  }
 }

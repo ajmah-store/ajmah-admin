@@ -1,0 +1,62 @@
+@import "../../app-theme.scss";
+
+.off-canvas-frame {
+  position: absolute;
+  right: -(300px + $app-border-width);
+  top: $app-titlebar-height;
+  width: 300px + $app-border-width;
+  height: calc(100% - #{$app-titlebar-height});
+  background: color(light);
+  border-left: $app-border-width solid $app-divider;
+  @include app-transition(all);
+  @include flex(column);
+
+  &.opened {
+    right: 0px;
+    &.maximized {
+      width: 100%;
+      min-width: 300px;
+      border-left: none;
+    }
+  }
+
+  & > .frame-title-bar {
+    @include flex;
+    align-items: center;
+    padding: padding(0.5);
+
+    .frame-title {
+      font-weight: 500;
+      font-size: 0.9em;
+      color: $app-text-secondary;
+    }
+
+    .frame-actions {
+      @include flex;
+      margin-left: auto;
+
+      button.frame-action-btn {
+        padding: 0;
+        position: relative;
+        background: transparent;
+        color: $app-text-secondary;
+        margin-right: padding(0.5);
+        @include app-transition(color);
+        @include tooltip('.frame-action-tooltip', 'left', 8px, tooltip-anim-slide, 0.5s);
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &:hover {
+          color: $app-text;
+        }
+      }
+    }
+  }
+
+  & > .frame-content {
+    flex: 1;
+    overflow-y: auto;
+  }
+}//.right-sidebar

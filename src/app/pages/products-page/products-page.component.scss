@@ -2,6 +2,7 @@
 
 #productsPage {
   position: relative;
+  overflow-x: hidden;
   @include flex(column);
 
   .content {
@@ -24,14 +25,15 @@
       padding: padding(0.5);
       font-size: 0.9em;
       @include app-transition(color);
-      @include tooltip('.action-tooltip', 'top', 16px, tooltip-anim-drop);
+      @include tooltip('.action-tooltip', 'bottom', 16px, tooltip-anim-drop);
       @include app-border-radius;
+
+      &.active, &.active:hover {
+        color: color(primary);
+      }
 
       &:hover {
         color: $app-text;
-        .action-tooltip {
-
-        }
       }
 
       &.icon-left {
@@ -51,14 +53,4 @@
     }
   }//action-bar
 
-  .right-sidebar {
-    position: absolute;
-    right: 0px;
-    top: $app-titlebar-height;
-    width: 300px + $app-border-width;
-    height: calc(100% - #{$app-titlebar-height});
-    height: calc(100% -#{2*$app-titlebar-height});
-    background: color(light);
-    border-left: $app-border-width solid $app-divider;
-  }
 }

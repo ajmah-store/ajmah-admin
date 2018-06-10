@@ -1,0 +1,45 @@
+<app-offcanvas
+  frameTitle="Add Product"
+  [opened]="isFrameOpened$(frameId.addProduct) | async">
+
+  <div class="product-frame-content">
+    <form class="add-product-form">
+      <div class="product-general-details">
+        <!-- Featured Image -->
+        <div class="featured-image-drop">
+          <div class="image-preview">
+            <img src="" #featuredImagePreview *ngIf="featuredImage">
+            <div class="placeholder" *ngIf="!featuredImage" (click)="triggerFeaturedInput()">
+              <div class="align-center">
+                <i class="material-icons md-48">add_photo_alternate</i>
+              </div>
+            </div>
+          </div>
+          <div class="image-adjustment-tools">
+            <button type="button" class="tool-btn" (click)="rotateLeft()">
+              <i class="material-icons md-18">rotate_left</i>
+              <div class="img-tooltip">Rotate Left</div>
+            </button>
+            <button type="button" class="tool-btn" (click)="rotateRight()">
+              <i class="material-icons md-18">rotate_right</i>
+              <div class="img-tooltip">Rotate Right</div>
+            </button>
+            <button type="button" class="tool-btn" (click)="flip()">
+              <i class="material-icons md-18">flip</i>
+              <div class="img-tooltip">Flip</div>
+            </button>
+            <!-- <button type="button" class="tool-btn btn-done">
+              <i class="material-icons md-18">done</i>
+            </button> -->
+          </div>
+          <input type="file" (change)="selectFeatured()" accept="image/jpeg" #featuredImageInput>
+        </div>
+        <!-- Name, Category -->
+        <div class="product-details">
+          <app-input-text placeholder="Product Name" name="productName" [(ngModel)]="productName"></app-input-text>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</app-offcanvas>
