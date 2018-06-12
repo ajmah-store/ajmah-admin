@@ -117,11 +117,11 @@ $app-titlebar-height: 24px + 2*$app-padding + $app-border-width;
   padding-bottom: $app-padding-bottom*$mult;
 }
 
-@mixin app-border-radius {
-  border-top-left-radius: $app-border-top-left-radius;
-  border-top-right-radius: $app-border-top-right-radius;
-  border-bottom-left-radius: $app-border-bottom-left-radius;
-  border-bottom-right-radius: $app-border-bottom-right-radius;
+@mixin app-border-radius($tl:$app-border-top-left-radius, $tr:$tl, $bl:$tl, $br:$tr) {
+  border-top-left-radius: $tl;
+  border-top-right-radius: $tr;
+  border-bottom-left-radius: $bl;
+  border-bottom-right-radius: $br;
 }
 
 @mixin app-transition($property, $delay:0s, $duration: $app-transition-duration, $easing: $app-transition-easing) {
@@ -179,4 +179,9 @@ $app-titlebar-height: 24px + 2*$app-padding + $app-border-width;
 @keyframes tooltip-anim-slide {
   0% { transform: translateX(-100px); opacity: 0; }
   100% { transform: translateX(0px); opacity: 1;  }
+}
+
+@keyframes tooltip-anim-fade {
+  0% { opacity: 0; }
+  100% { opacity: 1;  }
 }

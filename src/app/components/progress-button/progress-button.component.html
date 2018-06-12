@@ -1,0 +1,5 @@
+<button [type]="type" class="progress-btn" [ngClass]="getStyle()" (click)="emitClick()" [disabled]="!showNormal()">
+  <div class="content" *ngIf="showNormal()"><ng-content></ng-content></div>
+  <div *ngIf="showProgress()" class="progress-bar" [style.width.%]="progress"></div>
+  <div class="content" *ngIf="showComplete()"><i class="material-icons">done</i></div>
+</button>

@@ -21,7 +21,6 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
   onTouched: () => void = () => {};
 
   @Input() invalid:boolean = false;
-  @Input() name:string='';
   @Input() placeholder:string='';
 
   @Output() change: EventEmitter<string> = new EventEmitter();

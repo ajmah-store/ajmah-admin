@@ -1,16 +1,12 @@
 import { Category } from "./category.model";
 
-export const PRODUCT_COLLECTION = "product";
+export const PRODUCT_COLLECTION = "products";
 
 export class Product {
-  id?:string;
+  id:any;
+  featuredImageUrl:string;
   name: string;
-  category: Category;
+  category: string | Category;
   price: number;
-
-  constructor(name:string, category: Category, price: number) {
-    this.name = name;
-    this.category = category;
-    this.price = price;
-  }
+  description: string;
 }

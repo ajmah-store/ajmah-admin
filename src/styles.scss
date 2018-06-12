@@ -55,6 +55,30 @@ button {
   text-transform: uppercase;
   cursor: pointer;
 
+  &[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.rounded-corners {
+    @include app-border-radius(50rem);
+    padding: padding(1) padding(2);
+    &.icon-left {
+      padding-left: padding(1);
+    }
+    &.icon-right {
+      padding-right: padding(1);
+    }
+  }
+
+  &.icon-left {
+    .material-icons { margin-right: padding(1); }
+  }
+
+  &.icon-right {
+    .material-icons { margin-left: padding(1); }
+  }
+
   &:active {
     transform-origin: 50% 50%;
     transform: scale(0.95,0.95);
@@ -65,9 +89,142 @@ input {
   font-family: $app-font-family;
 }
 
+textarea.input-textarea {
+  @include app-padding;
+  width: 100%;
+  border: $app-border-width solid $app-divider;
+  @include app-border-radius;
+  height: 200px;
+  font-weight: 300;
+  font-size: 0.9em;
+  background: color(light);
+  color: $app-text-secondary;
+  resize: none;
+  font-family: $app-font-family;
+  @include app-transition(all);
+
+  &:focus {
+    color: $app-text;
+    background: #FFF;
+  }
+
+  &.invalid {
+    border-color: color(danger);
+    color: color(danger);
+  }
+}
+
+table {
+  &.fill {
+    width: 100%;
+  }
+  tr {
+    font-weight: 300;
+    &.header { 
+      font-weight: 500; 
+      color: color(primary);
+    }
+    border-bottom: $app-border-width solid $app-divider;
+  }
+
+  td {
+    @include app-padding;
+  }
+}
+
 .fill-page {
   width: 100%;
   height: calc(100% - #{$app-titlebar-height});
+}
+
+.spacer {
+  display: block;
+  height: padding(1);
+  background: transparent;
+  &.half {
+    height: padding(0.5);
+  }
+  &.double {
+    height: padding(2);
+  }
+}
+
+.hidden { visibility: hidden; }
+
+$i:0;
+@while $i < 360 {
+  .rot-#{$i} {
+    transform: rotate(#{$i}deg);
+  }
+  $i: $i+15;
+}
+
+//page
+.page {
+
+  position: relative;
+  overflow-x: hidden;
+  @include flex(column);
+
+  .content {
+    flex: 1;
+    @include app-padding;
+  }
+
+  .action-bar {
+    @include flex(row);
+    align-items: center;
+    height: $app-titlebar-height;
+    background: color(light);
+    border-bottom: $app-border-width solid $app-divider;
+    @include app-padding(0.5);
+
+    app-input-text.search { flex:1 }
+
+    .action-grp {
+
+      @include flex(row);
+
+      align-items: center;
+      &.push-right { margin-left: auto; }
+
+    }
+
+    .action-btn {
+      color: $app-text-secondary;
+      justify-content: center;
+      background: transparent;
+      position: relative;
+      padding: padding(0.5);
+      font-size: 0.9em;
+      @include app-transition(color);
+      @include tooltip('.action-tooltip', 'bottom', 16px, tooltip-anim-drop);
+      @include app-border-radius;
+
+      &.active, &.active:hover {
+        color: color(primary);
+      }
+
+      &:hover {
+        color: $app-text;
+      }
+
+      &.icon-left {
+        .material-icons {
+          margin-right: padding(0.5);
+        }
+      }
+
+      &.imp {
+        background: color(primary);
+        color: color(light);
+        @include app-transition(background);
+        &:hover {
+          background: $app-primary-dark;
+        }
+      }
+    }
+  }//action-bar
 }
 
 //Croppie

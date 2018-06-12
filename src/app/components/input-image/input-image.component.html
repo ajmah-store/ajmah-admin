@@ -1,0 +1,31 @@
+<div class="image-drop" dropzone (hovered)="hovered=$event" (dropped)="selectImage($event)">
+  <div class="image-preview">
+    <div class="image" [class.hovered]="hovered" *ngIf="image">
+      <img src="" #imagePreview>
+    </div>
+    <div class="placeholder" [class.hovered]="hovered" *ngIf="!image" (click)="triggerInput()">
+      <div class="align-center">
+        <i class="material-icons md-48">add_photo_alternate</i>
+      </div>
+    </div>
+  </div>
+  <div class="image-adjustment-tools" *ngIf="image">
+    <button type="button" class="tool-btn" (click)="rotateLeft()">
+      <i class="material-icons md-18">rotate_left</i>
+      <div class="img-tooltip">Rotate Left</div>
+    </button>
+    <button type="button" class="tool-btn" (click)="rotateRight()">
+      <i class="material-icons md-18">rotate_right</i>
+      <div class="img-tooltip">Rotate Right</div>
+    </button>
+    <button type="button" class="tool-btn" (click)="flip()">
+      <i class="material-icons md-18">flip</i>
+      <div class="img-tooltip">Flip</div>
+    </button>
+    <button type="button" class="tool-btn" (click)="triggerInput()">
+      <i class="material-icons md-18">image</i>
+      <div class="img-tooltip">Change Image</div>
+    </button>
+  </div>
+  <input type="file" (change)="selectImage($event.srcElement.files)" accept="image/jpeg" #imageInput>
+</div>

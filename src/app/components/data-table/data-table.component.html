@@ -1,0 +1,36 @@
+<table class="datatable fill" *ngIf="datas && keys">
+  <!-- Headers -->
+  <tr class="header">
+    <td *ngFor="let attr of attributes; index as i" (click)="sortBy(keys[i])">{{ attr }}</td>
+    <td style="border-left:none"></td>
+  </tr>
+
+  <!-- Datas -->
+  <tr *ngFor="let data of sortData(filteredData().toArray())" [@listItemEnter] (mousedown)="startTimeout(data)" (mouseup)="stopTimeout()" [class.selected]="isSelected(data)">
+    <td *ngFor="let key of keys" [ngClass]="getStyle(key)">
+      <span *ngIf="!getType(key)">{{ getData(data, key) }}</span>
+      <span *ngIf="getType(key)==='currency'">{{ getData(data, key) | currency:'&#8377;' }}</span>
+      <span *ngIf="getType(key)=='image'" class="datatable-image">
+        <img [src]="getData(data,key)">
+      </span>
+    </td>
+    <td class="datatable-row-actions">
+      <div class="action-grp">
+        <button class="action-btn edit" (click)="emitEdit()"><i class="material-icons md-18">create</i></button>
+        <button class="action-btn delete" (click)="emitDelete()"><i class="material-icons md-18">delete</i></button> 
+      </div>
+    </td>
+  </tr>
+  <tr class="footer">
+    <td [attr.colspan]="attributes.length+1">
+      <div class="footer-container">
+        <div class="footer-desc">{{getFooterDesc()}}</div>
+        <div class="action-grp">
+            <button class="action-btn" (click)="prevPage()"><i class="material-icons md-18">chevron_left</i></button>
+            <input type="text" class="action-input" [(ngModel)]="pageNo">
+            <button class="action-btn" (click)="nextPage()"><i class="material-icons md-18">chevron_right</i></button> 
+          </div>
+      </div>
+    </td>
+  </tr>
+</table>

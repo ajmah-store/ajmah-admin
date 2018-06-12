@@ -1,0 +1,16 @@
+<div class="input-grp" [class.invalid]="invalid">
+  <button type="button" class="selected-option" (click)="toggleDropdown()">
+    {{content || placeholder}}
+    <i class="material-icons md-18">expand_more</i>
+  </button>
+  <div class="options-container" [class.open]="dropdown">
+    <ul class="options">
+      <li class="option">
+        <input type="text" name="selec" placeholder="Search.." class="search-input" [(ngModel)]="searchTxt">
+      </li>
+      <li class="option" *ngFor="let option of filteredOptions()">
+        <button type="button" (click)="selectOption(option)">{{option.content}}</button>
+      </li>
+    </ul>
+  </div>
+</div>

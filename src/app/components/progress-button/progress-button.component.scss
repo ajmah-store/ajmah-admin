@@ -1,0 +1,65 @@
+@import "../../app-theme.scss";
+
+.progress-btn {
+  @include app-transition(all);
+  @include app-border-radius(50rem);
+  padding: 0px padding(1);
+  height: 55px;
+  overflow: hidden !important;
+  position: relative;
+  top: 0px;
+
+  &[disabled] {
+    opacity: 1;
+  }
+
+  &.progress {
+    background: $app-primary-light;
+    height: 3px;
+    top: 26px;
+    padding: 0px;
+    width: 150px;
+
+    .progress-bar {
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      border-radius: 50rem;
+      height: 3px;
+      @include app-transition(width, 0.1);
+      background: color(accent);
+    }
+  }
+
+  &.complete {
+    background: color(success);
+  }
+
+  & > .content {
+    @include flex;
+    align-items: center;
+  }
+
+  &.icon-left {
+    .material-icons{ margin-right: padding(1); }
+  }
+  &.icon-right {
+    .material-icons{ margin-left: padding(1); }
+  }
+}
+
+.anim-rotate {
+  animation: rotate 3s ease-out;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 50%;
+}
+
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(180deg); }
+  50% { transform: rotate(180deg); }
+  60% { transform:rotate(360deg); }
+  100% { transform:rotate(360deg); }
+}

@@ -22,6 +22,8 @@ declare class Croppie {
     setZoom(zoom: number): void;
 
     destroy(): void;
+
+    refresh(): void;
 }
 
 declare namespace Croppie {
@@ -49,6 +51,7 @@ declare namespace Croppie {
         mouseWheelZoom?: boolean|'ctrl';
         showZoomer?: boolean;
         viewport?: { width: number, height: number, type?: CropType };
+        update?:() => void;
     }
 
     interface CropData {

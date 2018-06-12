@@ -1,20 +1,32 @@
 @import "../../app-theme.scss";
 
 .input-grp {
-  padding: padding(0.5);
   @include flex;
   @include app-border-radius;
   background: color(light);
   border: $app-border-width solid $app-divider;
+  overflow: hidden;
+  z-index: 1;
+  @include app-transition(all);
+
+  &.invalid {
+    border-color: color(danger);
+    input {
+      color: color(danger);
+    }
+  }
 
   input {
     border: none;
     font-weight: 300;
+    padding: padding(0.5);
     flex: 1;
+    background: transparent;
     color: $app-text-secondary;
-    @include app-transition(color);
+    @include app-transition(all);
     &:focus {
       color: $app-text;
+      background: #FFF;
     }
   }
 }

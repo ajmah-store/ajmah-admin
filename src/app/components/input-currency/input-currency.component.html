@@ -1,0 +1,8 @@
+<div class="input-grp" [class.focused]="focused" [class.invalid]="invalid">
+  <div class="label">&#8377;</div>
+  <input type="text"
+    (focus)="setFocused(true)"
+    (blur)="setFocused(false)"
+    [placeholder]="placeholder"
+    [(ngModel)]="value">
+</div>

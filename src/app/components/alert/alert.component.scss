@@ -1,0 +1,38 @@
+@import "../../app-theme.scss";
+
+div.alert-container {
+    //position: fixed;
+    width: 100%;
+    z-index: 1000;
+    background: color(primary);
+    color: color(light);
+    height: 55px;
+    overflow: hidden;
+
+    &.success { background: color(success) }
+    &.info { background: color(info) }
+    &.warn { background: color(warn) }
+    &.danger { background: color(danger) }
+
+    @include flex;
+    padding: 0px padding(1);
+
+    align-items: center;
+
+    .alert-title {
+        font-weight: 500;
+        margin-right: padding(1);
+    }
+
+    .alert-content {
+        font-weight: 300;
+    }
+
+    button.btn-alert-dismiss {
+        background: transparent;
+        font-size: 0.8 em;
+        padding: 0;
+        border-radius: 0px;
+        margin-left: auto;
+    }
+}

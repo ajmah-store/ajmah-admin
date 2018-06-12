@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
+import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: "products",
         component: ProductsPageComponent
+      },
+      {
+        path: 'categories',
+        component: CategoriesPageComponent
       },
       {
         path: "",

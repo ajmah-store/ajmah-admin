@@ -1,0 +1,133 @@
+@import '../../app-theme.scss';
+
+.datatable {
+
+    @include app-border-radius;
+    border: $app-border-width solid $app-divider;
+    border-spacing: 0px;
+    border-collapse: unset;
+    background: color(light);
+    overflow: hidden;
+    z-index: 1;
+
+    tr { 
+        vertical-align: middle;
+        @include app-transition(background);
+        cursor: pointer;
+
+        &:hover {
+            background: darken(color(light), 5%);
+            td { 
+                border-color: darken(color(light), 5%);
+
+                &.datatable-row-actions { opacity: 1; }
+            }
+        }
+
+        &.selected {
+            background: $app-primary-light;
+            animation: flipInX $app-transition-duration $app-transition-easing;
+        }
+
+        &.header {
+            td { 
+                border-left: $app-border-width solid $app-divider;
+                border-bottom: $app-border-width solid $app-divider;
+
+                &:first-child { border-left: none; }
+            }
+            background: color(light);
+        }
+
+        &.footer {
+            td { 
+                border-left: none;
+                border-top: $app-border-width solid $app-divider;
+            }
+
+            .footer-container {
+                @include flex;
+                align-items: center;
+                justify-content: center;
+
+                .footer-desc { margin-right: auto; }
+            }
+        }
+     }//tr
+
+    td {
+
+        border-left: $app-border-width solid $app-divider;
+
+        &:first-child { border-left: none; }
+
+        &.narrow { width: 30px + 2*padding(1); }
+        &.rightAlign { text-align: right; }
+
+        &.datatable-row-actions {
+            border-left: none;
+            width: 100px;
+            opacity: 0;
+        }
+    }//td
+
+    .datatable-image {
+        display: block;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        border: $app-border-width solid $app-divider;
+        overflow: hidden;
+        z-index: 1;
+
+        img { width: 100%; height: 100%; }
+    }//image
+
+    .action-grp {
+        @include flex;
+        @include app-transition(opacity);
+
+        align-items: center;
+        justify-content: center;
+
+        .action-btn {
+            padding: padding(0.5);
+            color: $app-text-secondary;
+            background: color(light);
+            margin-right: padding(0.5);
+            border: $app-border-width solid $app-divider;
+
+            @include app-border-radius;
+            @include app-transition(all);
+
+            &:last-child { margin-right: 0; }
+
+            &:hover { color: color(primary) }
+
+            &.delete:hover {
+                color: color(danger);
+            }
+
+            &.edit:hover {
+                color: color(info);
+            }
+
+            &:active { transform: scale(0.9, 0.9)}
+            
+        }//action-btn
+
+        .action-input {
+            padding: padding(0.5);
+            color: $app-text-secondary;
+            background: color(light);
+            margin-right: padding(0.5);
+            border: $app-border-width solid $app-divider;
+            text-align: center;
+            width: 60px;
+
+            @include app-border-radius;
+
+            &:last-child { margin-right: 0; }
+        }
+    }//action-grp
+}

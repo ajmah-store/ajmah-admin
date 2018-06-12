@@ -1,11 +1,6 @@
-export const CATEGORY_COLLECTION = "category";
+export const CATEGORY_COLLECTION = "categories";
 
 export class Category {
-  id?: string;
+  id?: any;
   name: string;
-
-  constructor(name:string, id?:string) {
-    this.name = name;
-    this.id = id;
-  }
 }

@@ -1,15 +1,31 @@
-<div class="fill-page" id="productsPage">
+<div class="fill-page page" id="productsPage">
   <div class="action-bar">
-    <button
-      class="action-btn icon-left"
-      [class.active]="isFrameOpened$(frameId.addProduct) | async"
-      (click)="openFrame(frameId.addProduct)">
-
-      <i class="material-icons md-18">add</i> Add Product
-
-    </button>
+    <app-input-text class="search" [(ngModel)]="searchTxt" placeholder="Search..."></app-input-text>
+    
+    <div class="action-grp push-right">
+        <button
+          class="action-btn icon-left"
+          [class.active]="isFrameOpened$(frameId.addProduct) | async"
+          (click)="toggleFrame(frameId.addProduct)">
+    
+          <i class="material-icons md-18">add</i> Add Product
+      </button>
+    </div>
   </div>
   <div class="content">
+    <app-data-table
+      *ngIf="products"
+      (edit)="editProduct($event)" 
+      (delete)="deleteProduct($event)"
+      (select)="selectProduct($event)"
+      (unselect)="unselectProduct($event)"
+      [datas]="filteredProducts()"
+      [selectedDatas]="selectedProducts" 
+      [limit]="15"
+      [keys]="datatableKeys" 
+      [attributes]="datatableAttrs" 
+      sortBy="name"
+      [map]="categories"></app-data-table>
   </div>
   <app-add-product></app-add-product>
 </div>

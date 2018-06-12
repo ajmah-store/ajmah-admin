@@ -1,0 +1,110 @@
+@import "../../app-theme.scss";
+
+.input-grp {
+  @include app-border-radius;
+  background: color(light);
+  border: $app-border-width solid $app-divider;
+  position: relative;
+  @include app-transition(all);
+
+  &.invalid {
+    border-color: color(danger);
+
+    .selected-option {
+      color: color(danger);
+    }
+  }
+
+  .selected-option {
+    width: 100%;
+    @include app-padding(0.5);
+    @include app-border-radius;
+    color: $app-text-secondary;
+    background: transparent;
+    text-transform: none;
+    font-weight: 300;
+
+    .material-icons { margin-left: auto; }
+
+    &:active {
+      transform: none;
+      .material-icons {
+        transform: scale(0.8, 0.8);
+      }
+    }
+  }
+
+  .options-container{
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    overflow: hidden;
+    @include app-border-radius;
+    background: color(light);
+    @include elevation(1px);
+    display: none;
+    transform-origin: top;
+
+    &.open {
+      display: block;
+      animation: dropdown-anim $app-transition-duration $app-transition-easing;
+    }
+
+
+    ul.options {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+
+      li.option {
+        @include app-transition(background);
+
+        &:first-child {
+          border-top-left-radius: $app-border-radius;
+          border-top-right-radius: $app-border-radius;
+        }
+        &:last-child {
+          border-bottom-left-radius: $app-border-radius;
+          border-bottom-right-radius: $app-border-radius;
+        }
+
+        &:hover {
+          background: $app-primary-light;
+        }
+
+        button {
+          width: 100%;
+          @include app-padding(1);
+          @include app-transition(color);
+          color: $app-text-secondary;
+          background: transparent;
+          text-transform: none;
+          border-radius: 0px;
+          font-weight: 300;
+          &:hover {
+            color: color(primary);
+          }
+
+          &:active {
+            transform: scale(0.99,0.99);
+          }
+        }
+
+        input.search-input {
+          width: 100%;
+          border: none;
+          padding: padding(1);
+          color: $app-text-secondary;
+          background: transparent;
+          font-style: oblique;
+          font-weight: 300;
+        }
+      }
+    }
+  }
+}
+
+@keyframes dropdown-anim {
+  0% { opacity: 0; transform: scale(1,0); };
+  100% { opacity: 1; transform: scale(1,1); };
+}

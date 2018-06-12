@@ -3,42 +3,26 @@
   [opened]="isFrameOpened$(frameId.addProduct) | async">
 
   <div class="product-frame-content">
-    <form class="add-product-form">
+    <form class="add-product-form" [formGroup]="productForm" (submit)="addProduct()">
       <div class="product-general-details">
         <!-- Featured Image -->
-        <div class="featured-image-drop">
-          <div class="image-preview">
-            <img src="" #featuredImagePreview *ngIf="featuredImage">
-            <div class="placeholder" *ngIf="!featuredImage" (click)="triggerFeaturedInput()">
-              <div class="align-center">
-                <i class="material-icons md-48">add_photo_alternate</i>
-              </div>
-            </div>
-          </div>
-          <div class="image-adjustment-tools">
-            <button type="button" class="tool-btn" (click)="rotateLeft()">
-              <i class="material-icons md-18">rotate_left</i>
-              <div class="img-tooltip">Rotate Left</div>
-            </button>
-            <button type="button" class="tool-btn" (click)="rotateRight()">
-              <i class="material-icons md-18">rotate_right</i>
-              <div class="img-tooltip">Rotate Right</div>
-            </button>
-            <button type="button" class="tool-btn" (click)="flip()">
-              <i class="material-icons md-18">flip</i>
-              <div class="img-tooltip">Flip</div>
-            </button>
-            <!-- <button type="button" class="tool-btn btn-done">
-              <i class="material-icons md-18">done</i>
-            </button> -->
-          </div>
-          <input type="file" (change)="selectFeatured()" accept="image/jpeg" #featuredImageInput>
-        </div>
+        <app-input-image (change)="selectImage($event)" #featuredImageInput></app-input-image>
         <!-- Name, Category -->
         <div class="product-details">
-          <app-input-text placeholder="Product Name" name="productName" [(ngModel)]="productName"></app-input-text>
+          <app-input-text placeholder="Product Name" formControlName="name" [invalid]="isInvalid('name')"></app-input-text>
+          <div class="spacer"></div>
+          <app-input-select formControlName="category" [options]="categories$ | async" placeholder="Category" [invalid]="isInvalid('category')"></app-input-select>
+          <div class="spacer"></div>
+          <app-input-currency placeholder="Price" formControlName="price" [invalid]="isInvalid('price')"></app-input-currency>
         </div>
       </div>
+      <div class="product-desc">
+        <label for="productDescription">Description</label>
+        <textarea formControlName="description" class="input-textarea" [class.invalid]="isInvalid('description')"></textarea>
+      </div>
+      <div class="spacer"></div>
+      <app-progress-button iconLeft="true" [progress]="taskChange$ | async" class="bounceIn" *ngIf="productForm.valid && featuredImage"><i class="material-icons">add</i>Add Product</app-progress-button>
+      <div class="spacer"></div>
     </form>
   </div>
 

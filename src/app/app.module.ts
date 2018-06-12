@@ -1,9 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 
 import { AppStoreModule } from './store/app-store.module';
 import { environment } from '../environments/environment';
@@ -18,6 +20,15 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 import { OffcanvasComponent } from './components/offcanvas/offcanvas.component';
 import { AddProductComponent } from './partials/add-product/add-product.component';
 import { InputTextComponent } from './components/input-text/input-text.component';
+import { InputImageComponent } from './components/input-image/input-image.component';
+import { InputSelectComponent } from './components/input-select/input-select.component';
+import { InputCurrencyComponent } from './components/input-currency/input-currency.component';
+import { DropzoneDirective } from './directives/dropzone.directive';
+import { ProgressButtonComponent } from './components/progress-button/progress-button.component';
+import { AlertComponent } from './components/alert/alert.component';
+import { DataTableComponent } from './components/data-table/data-table.component';
+import { RangePipe } from './pipes/range.pipe';
+import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
 
 @NgModule({
   declarations: [
@@ -30,13 +41,25 @@ import { InputTextComponent } from './components/input-text/input-text.component
     OffcanvasComponent,
     AddProductComponent,
     InputTextComponent,
+    InputImageComponent,
+    InputSelectComponent,
+    InputCurrencyComponent,
+    DropzoneDirective,
+    ProgressButtonComponent,
+    AlertComponent,
+    DataTableComponent,
+    RangePipe,
+    CategoriesPageComponent,
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
+    AngularFirestoreModule.enablePersistence(),//offline data
+    AngularFireStorageModule,
     AppStoreModule,
   ],
   providers: [],

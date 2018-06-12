@@ -3,11 +3,11 @@
     <div class="frame-title">{{frameTitle}}</div>
     <div class="frame-actions">
       <button class="frame-action-btn" *ngIf="!maximized" (click)="maximize()">
-        <i class="material-icons md-18">maximize</i>
+        <i class="material-icons md-18 rot-45">unfold_more</i>
         <span class="frame-action-tooltip">Maximize</span>
       </button>
       <button class="frame-action-btn" *ngIf="maximized" (click)="minimize()">
-        <i class="material-icons md-18">minimize</i>
+        <i class="material-icons md-18 rot-45">unfold_less</i>
         <span class="frame-action-tooltip">Minimize</span>
       </button>
       <button class="frame-action-btn" (click)="close()">
