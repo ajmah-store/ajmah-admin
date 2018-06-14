@@ -10,6 +10,12 @@
     overflow: hidden;
     z-index: 1;
 
+    .placeholder {
+        text-align: center;
+        font-size: 1.2em;
+        font-weight: 100;
+    }
+
     tr { 
         vertical-align: middle;
         @include app-transition(background);

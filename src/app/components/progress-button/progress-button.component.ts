@@ -8,47 +8,87 @@ import { Observable } from 'rxjs';
 })
 export class ProgressButtonComponent implements OnInit {
 
-  @Input() progress: number;
+  private _task: Promise<any>;
+
   @Input() type:string = 'submit';
   @Input() iconLeft:boolean = false;
   @Input() iconRight:boolean = false;
 
-  @Output() click = new EventEmitter<number>();
+  @Output() click = new EventEmitter<any>();
+  @Output() complete = new EventEmitter<any>();
+  @Output() error = new EventEmitter<any>();
+
+  state = 'normal';
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  showProgress():boolean {
-    return !this.showNormal() && (this.progress < 100);
+  get task():Promise<any> {
+    return this._task;
   }
 
-  showComplete():boolean {
-    if(this.progress == 100) {
-      setTimeout(() => { this.progress = null}, 5000);
-      return true;
-    }
+  @Input()
+  set task(val:Promise<any>) {
+    
+    this._task = val;
 
-    return false;
-  }
-
-  showNormal():boolean {
-    return (this.progress === undefined || this.progress === null) ;
+    //control state
+    this.changeState(val);
   }
 
   getStyle():any {
     return {
-      'normal': this.showNormal(),
-      'progress': this.showProgress(),
-      'complete': this.showComplete(),
-      'icon-left': this.iconLeft && this.showNormal(),
-      'icon-right': this.iconRight && this.showNormal()
+      'normal': this.checkState('normal'),
+      'progress': this.checkState('pending'),
+      'complete': this.checkState('complete'),
+      'error': this.checkState('error'),
+      'icon-left': this.iconLeft && this.checkState('normal'),
+      'icon-right': this.iconRight && this.checkState('normal')
     }
   }
 
+  checkState(val:string) {
+    return this.state === val;
+  }
+
   emitClick() {
-    this.click.emit(this.progress);
+
+    this.click.emit();
+
+  }
+
+  changeState(val:Promise<any>) {
+
+    if(val) {
+      //set state to pending
+      this.state = 'pending';
+
+      this.task.then(() => {
+
+        //set state to complete
+        this.state = 'complete';
+
+        //emit complete event
+        this.complete.emit();
+
+      }).catch(error => {
+
+        //set state to error
+        this.state = 'error';
+
+        //emit error event
+        this.error.emit();
+
+      });
+    }
+    else {
+
+      //set state to normal
+      this.state = 'normal';
+
+    }
   }
 
 }

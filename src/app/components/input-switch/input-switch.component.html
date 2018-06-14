@@ -1,0 +1,8 @@
+<div class="switch-container">
+  <div class="switch-track" (click)="toggleValue()" [class.on]="value">
+    <div class="switch-label">{{label}}</div>
+    <button type="button" class="switch-thumb">
+      <i class="material-icons">{{value?iconOn:iconOff}}</i>
+    </button>
+  </div>
+</div>

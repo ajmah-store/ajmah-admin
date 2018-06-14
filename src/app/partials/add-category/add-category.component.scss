@@ -1,0 +1,38 @@
+@import "../../app-theme.scss";
+
+.category-frame-content {
+    width: 100%;
+    @include app-padding(0.5);
+    @include flex(column);
+    align-items: center;
+  
+    .add-category-form {
+      width: 100%;
+      @include flex(column);
+      align-items: center;
+  
+      .category-general-details {
+        @include flex;
+        flex-wrap: wrap;
+        width: 100%;
+        //align-items: center;
+        justify-content: center;
+  
+        app-input-image {
+          width: 200px + 2*padding(1);
+        }
+  
+        .category-details {
+          flex: 1;
+          min-width: 300px;
+          @include app-padding;
+        }//category-details
+  
+      }
+    //   .category-desc {
+    //     width: 100%;
+    //     @include app-padding;
+    //   }
+  
+    }
+  }

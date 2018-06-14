@@ -9,11 +9,15 @@
         <app-input-image (change)="selectImage($event)" #featuredImageInput></app-input-image>
         <!-- Name, Category -->
         <div class="product-details">
+          <app-input-switch label="featured" icon-on="home" formControlName="featured"></app-input-switch>
+          <div class="spacer"></div>
           <app-input-text placeholder="Product Name" formControlName="name" [invalid]="isInvalid('name')"></app-input-text>
           <div class="spacer"></div>
           <app-input-select formControlName="category" [options]="categories$ | async" placeholder="Category" [invalid]="isInvalid('category')"></app-input-select>
           <div class="spacer"></div>
           <app-input-currency placeholder="Price" formControlName="price" [invalid]="isInvalid('price')"></app-input-currency>
+          <div class="spacer"></div>
+          <app-input-text placeholder="Unit" formControlName="unit" [invalid]="isInvalid('unit')"></app-input-text>
         </div>
       </div>
       <div class="product-desc">
@@ -21,7 +25,7 @@
         <textarea formControlName="description" class="input-textarea" [class.invalid]="isInvalid('description')"></textarea>
       </div>
       <div class="spacer"></div>
-      <app-progress-button iconLeft="true" [progress]="taskChange$ | async" class="bounceIn" *ngIf="productForm.valid && featuredImage"><i class="material-icons">add</i>Add Product</app-progress-button>
+      <app-progress-button iconLeft="true" [task]="addTask" class="bounceIn" ><i class="material-icons">add</i>Add Product</app-progress-button>
       <div class="spacer"></div>
     </form>
   </div>

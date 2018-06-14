@@ -21,11 +21,12 @@
       (unselect)="unselectProduct($event)"
       [datas]="filteredProducts()"
       [selectedDatas]="selectedProducts" 
-      [limit]="15"
+      [limit]="10"
       [keys]="datatableKeys" 
       [attributes]="datatableAttrs" 
       sortBy="name"
       [map]="categories"></app-data-table>
   </div>
   <app-add-product></app-add-product>
+  <app-edit-product [product]="productEditted"></app-edit-product>
 </div>

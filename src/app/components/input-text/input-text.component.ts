@@ -36,6 +36,7 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
     return this._value;
   }
 
+  @Input()
   set value(val:string) {
     this._value = val;
     this.onChange(val);

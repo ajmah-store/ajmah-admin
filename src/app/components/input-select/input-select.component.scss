@@ -34,6 +34,18 @@
     }
   }
 
+  .selected-option, .option > button {
+    .input-select-image {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      overflow: hidden;
+      z-index: 1;
+      margin-right: padding(1);
+      img { width: 100%; }
+    }
+  }
+
   .options-container{
     width: 100%;
     position: absolute;

@@ -1,12 +1,14 @@
 import { State, Action, StateContext, Selector } from '@ngxs/store';
-import { ExpandSidebar, CollapseSidebar, ToggleSidebar, ChangeOffCanvas, CreateAlert, DismissAlert, ToggleOffCanvas } from '../actions/ui.actions';
+import { ExpandSidebar, CollapseSidebar, ToggleSidebar, ChangeOffCanvas, CreateAlert, DismissAlert, ToggleOffCanvas, CreateConfirm, DismissConfirm } from '../actions/ui.actions';
 
 import { Alert } from '../../models/alert.model';
+import { Confirm } from '../../models/confirm.model';
 
 export interface UIStateModel {
     sidebarCollapsed:boolean;
     offCanvasOpened:number;
     alert: Alert;
+    confirm: Confirm;
 }
 
 @State<UIStateModel>({
@@ -14,7 +16,8 @@ export interface UIStateModel {
   defaults: {
     sidebarCollapsed: false,
     offCanvasOpened: 0,
-    alert: null
+    alert: null,
+    confirm: null
   }
 })
 export class UIState {
@@ -32,6 +35,11 @@ export class UIState {
   @Selector()
   static getAlert(state: UIStateModel) {
     return state.alert;
+  }
+
+  @Selector()
+  static getConfirm(state: UIStateModel) {
+    return state.confirm;
   }
 
   //sidebar
@@ -86,5 +94,20 @@ export class UIState {
     ctx.patchState({
       alert: null
     });
+  }
+
+  //Confirm
+  @Action(CreateConfirm)
+  createConfirm(ctx: StateContext<UIStateModel>, {payload}: CreateConfirm) {
+    ctx.patchState({
+      confirm: payload
+    });
+  }
+
+  @Action(DismissConfirm)
+  createCOnfirm(ctx: StateContext<UIStateModel>, action: DismissConfirm) {
+    ctx.patchState({
+      confirm: null
+    })
   }
 }

@@ -29,6 +29,10 @@ import { AlertComponent } from './components/alert/alert.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
 import { RangePipe } from './pipes/range.pipe';
 import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
+import { AddCategoryComponent } from './partials/add-category/add-category.component';
+import { InputSwitchComponent } from './components/input-switch/input-switch.component';
+import { ConfirmComponent } from './components/confirm/confirm.component';
+import { EditProductComponent } from './partials/edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +54,10 @@ import { CategoriesPageComponent } from './pages/categories-page/categories-page
     DataTableComponent,
     RangePipe,
     CategoriesPageComponent,
+    AddCategoryComponent,
+    InputSwitchComponent,
+    ConfirmComponent,
+    EditProductComponent,
   ],
   imports: [
     BrowserModule,

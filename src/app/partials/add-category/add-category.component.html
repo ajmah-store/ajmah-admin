@@ -1,0 +1,19 @@
+<app-offcanvas frameTitle="Add Category" [opened]="isFrameOpened$(frameId.addCategory) | async">
+
+    <div class="category-frame-content">
+        <form class="add-category-form" [formGroup]="categoryForm" (submit)="addCategory()">
+          <div class="category-general-details">
+            <!-- Featured Image -->
+            <app-input-image (change)="selectImage($event)" #featuredImageInput></app-input-image>
+            <!-- Name, Category -->
+            <div class="category-details">
+              <app-input-text placeholder="Category Name" formControlName="name" [invalid]="isInvalid('name')"></app-input-text>
+            </div>
+          </div>
+          <div class="spacer"></div>
+          <app-progress-button iconLeft="true" [task]="addTask" class="bounceIn" *ngIf="categoryForm.valid && featuredImage"><i class="material-icons">add</i>Add category</app-progress-button>
+          <div class="spacer"></div>
+        </form>
+      </div>
+
+</app-offcanvas>

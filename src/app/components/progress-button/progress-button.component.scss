@@ -6,34 +6,81 @@
   padding: 0px padding(1);
   height: 55px;
   overflow: hidden !important;
-  position: relative;
   top: 0px;
+  
 
   &[disabled] {
     opacity: 1;
   }
 
+  .progress-button-content {
+    flex: 1;
+    @include flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // &.normal {
+  //   background: color(light);
+  //   color: color(primary);
+  //   border: 3px solid color(primary);
+
+  //   &:hover {
+  //     background: color(primary);
+  //     color: color(light);
+  //   }
+  // }
+
   &.progress {
-    background: $app-primary-light;
-    height: 3px;
-    top: 26px;
     padding: 0px;
-    width: 150px;
+    width: 55px;
+    background: color(info);
 
     .progress-bar {
-      display: block;
-      position: absolute;
-      left: 0;
-      top: 0;
-      border-radius: 50rem;
-      height: 3px;
-      @include app-transition(width, 0.1);
-      background: color(accent);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin: auto;
+      width: 30px;
+      height: 30px;
+      //background: color(light);
+      position: relative;
+
+      .progress-bar-dot {
+        $anim-duration: $app-transition-duration*3;
+
+        $dot-size: 5px;
+        width: $dot-size;
+        height: $dot-size;
+        border-radius: $dot-size;
+        background: color(light);
+        //margin-right: $dot-size/2;
+        animation: progress-anim $anim-duration $app-transition-easing ;
+        animation-iteration-count: infinite;
+
+        @for $i from 1 through 3 {
+          &:nth-child(#{$i}) {
+            animation-delay: $i*$anim-duration/6;
+          }
+        }
+
+        //&:last-child { margin-right: none; }
+      }
     }
   }
 
   &.complete {
+    padding: 0;
+    width: 55px;
     background: color(success);
+    animation: scale $app-transition-duration $app-transition-easing;
+  }
+
+  &.error {
+    padding: 0;
+    width: 55px;
+    background: color(danger);
+    animation: scale $app-transition-duration $app-transition-easing;
   }
 
   & > .content {
@@ -49,17 +96,15 @@
   }
 }
 
-.anim-rotate {
-  animation: rotate 3s ease-out;
-  animation-iteration-count: infinite;
-  transform-origin: 50% 50%;
+
+@keyframes progress-anim {
+  0% { transform: translateY(0px); }
+  25% { transform: translateY(-10px); }
+  50% { transform: translateY(0px); }
+  100% { transform: translateY(0px); }
 }
 
-
-@keyframes rotate {
-  0% { transform: rotate(0deg); }
-  10% { transform: rotate(180deg); }
-  50% { transform: rotate(180deg); }
-  60% { transform:rotate(360deg); }
-  100% { transform:rotate(360deg); }
+@keyframes scale {
+  0% { transform: scale(0.2,0.2); }
+  100% { transform: scale(1,1); }
 }

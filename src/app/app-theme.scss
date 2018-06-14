@@ -52,6 +52,7 @@ $colors: (
   warn: #ff9800,
   success: #4caf50,
   info: #03a9f4,
+  idle: $app-divider
 );
 
 //font-weights
@@ -138,6 +139,7 @@ $app-titlebar-height: 24px + 2*$app-padding + $app-border-width;
 @mixin tooltip($selector, $pos, $offset, $anim:tooltip-anim-drop, $delay:0s) {
   #{$selector} {
     position: absolute;
+    z-index:1000;
     @if $pos == "left" {
       right: calc(100% + #{$offset});
     }

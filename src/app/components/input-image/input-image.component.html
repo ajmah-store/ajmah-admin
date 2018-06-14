@@ -1,24 +1,27 @@
 <div class="image-drop" dropzone (hovered)="hovered=$event" (dropped)="selectImage($event)">
   <div class="image-preview">
-    <div class="image" [class.hovered]="hovered" *ngIf="image">
+    <div class="image" [class.hovered]="hovered" [hidden]="!imageUrl">
+      <div class="hovered-drop">
+          <i class="material-icons md-48">add_photo_alternate</i>
+      </div>
       <img src="" #imagePreview>
     </div>
-    <div class="placeholder" [class.hovered]="hovered" *ngIf="!image" (click)="triggerInput()">
+    <div class="placeholder" [class.hovered]="hovered" *ngIf="!imageUrl" (click)="triggerInput()">
       <div class="align-center">
         <i class="material-icons md-48">add_photo_alternate</i>
       </div>
     </div>
   </div>
-  <div class="image-adjustment-tools" *ngIf="image">
-    <button type="button" class="tool-btn" (click)="rotateLeft()">
+  <div class="image-adjustment-tools" *ngIf="imageUrl">
+    <button type="button" class="tool-btn" (click)="rotateLeft()" *ngIf="imageCrop">
       <i class="material-icons md-18">rotate_left</i>
       <div class="img-tooltip">Rotate Left</div>
     </button>
-    <button type="button" class="tool-btn" (click)="rotateRight()">
+    <button type="button" class="tool-btn" (click)="rotateRight()" *ngIf="imageCrop">
       <i class="material-icons md-18">rotate_right</i>
       <div class="img-tooltip">Rotate Right</div>
     </button>
-    <button type="button" class="tool-btn" (click)="flip()">
+    <button type="button" class="tool-btn" (click)="flip()" *ngIf="imageCrop">
       <i class="material-icons md-18">flip</i>
       <div class="img-tooltip">Flip</div>
     </button>

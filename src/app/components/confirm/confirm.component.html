@@ -1,0 +1,10 @@
+<div class="confirm" *ngIf="confirm">
+  <div class="confirm-body" [@enterAnim]>
+    <div class="confirm-title">{{confirm.title}}</div>
+    <div class="confirm-content">{{confirm.content}}</div>
+    <div class="confirm-actions">
+      <button class="confirm-action-ok" (click)="okButtonClicked()">{{confirm.okButton.text}}</button>
+      <button class="confirm-action-cancel" (click)="cancelButtonClicked()">{{confirm.cancelButton.text}}</button>
+    </div>
+  </div>
+</div>

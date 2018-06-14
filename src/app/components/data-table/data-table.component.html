@@ -1,14 +1,20 @@
-<table class="datatable fill" *ngIf="datas && keys">
+<table class="datatable fill" [@listAnimation]="datas.size()" *ngIf="datas && keys">
   <!-- Headers -->
   <tr class="header">
     <td *ngFor="let attr of attributes; index as i" (click)="sortBy(keys[i])">{{ attr }}</td>
     <td style="border-left:none"></td>
   </tr>
 
+  <!-- Placeholder -->
+  <tr *ngIf="filteredData().size()==0">
+    <td [attr.colspan]="keys.length+1" class="placeholder">Nothing to show</td>
+  </tr>
+
   <!-- Datas -->
-  <tr *ngFor="let data of sortData(filteredData().toArray())" [@listItemEnter] (mousedown)="startTimeout(data)" (mouseup)="stopTimeout()" [class.selected]="isSelected(data)">
+  <tr class="data-row" *ngFor="let data of sortData(filteredData().toArray())" (mousedown)="startTimeout(data)" (mouseup)="stopTimeout()" [class.selected]="isSelected(data)">
     <td *ngFor="let key of keys" [ngClass]="getStyle(key)">
       <span *ngIf="!getType(key)">{{ getData(data, key) }}</span>
+      <span *ngIf="getType(key)==='number'">{{ getData(data, key) }}</span>
       <span *ngIf="getType(key)==='currency'">{{ getData(data, key) | currency:'&#8377;' }}</span>
       <span *ngIf="getType(key)=='image'" class="datatable-image">
         <img [src]="getData(data,key)">
@@ -16,8 +22,8 @@
     </td>
     <td class="datatable-row-actions">
       <div class="action-grp">
-        <button class="action-btn edit" (click)="emitEdit()"><i class="material-icons md-18">create</i></button>
-        <button class="action-btn delete" (click)="emitDelete()"><i class="material-icons md-18">delete</i></button> 
+        <button class="action-btn edit" (click)="emitEdit(data)"><i class="material-icons md-18">create</i></button>
+        <button class="action-btn delete" (click)="emitDelete(data)"><i class="material-icons md-18">delete</i></button> 
       </div>
     </td>
   </tr>

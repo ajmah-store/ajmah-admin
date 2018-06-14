@@ -1,23 +1,32 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Map, ArrayList } from '@arjunatlast/jsds';
 import { Product } from '../../models/product.model';
-import { transition, trigger, style, animate } from '@angular/animations';
+import { transition, trigger, style, animate, query, stagger } from '@angular/animations';
 
 @Component({
   selector: 'app-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
   animations: [
-    trigger('listItemEnter', [
+    trigger('listAnimation', [
       transition(':enter', [
-        style({transform:'translateY(-30px)'}),
-        animate('300ms', style({transform: 'translateY(0px)'}))
+        style({opacity:0}),
+        animate('300ms ease-in', style({opacity:1}))
       ]),
-      transition(':leave', [
-        style({transform:'translateY:0px'}),
-        animate('300ms', style({transition:'translateY:-30px'}))
+      transition('* => *', [
+
+        query('.data-row:leave', stagger('25ms', [
+            animate('100ms ease-in', style({opacity:0, transform:'translateY(-30px)'}))
+        ]), {optional: true}),
+
+        query('.data-row:enter', style({ opacity: 0, transform:'translateY(-50px)' }), {optional: true}),
+
+        query('.data-row:enter', [stagger('100ms', [
+            animate('300ms ease-in', style({opacity:1, transform:'translateY(0px)'}))
+        ])], {optional:true}),
+
       ])
-    ])
+    ]),
   ]
 })
 export class DataTableComponent implements OnInit {
@@ -25,7 +34,7 @@ export class DataTableComponent implements OnInit {
   @Input() keys: string[];
   @Input() attributes: string[];
   @Input() datas: ArrayList<any>;
-  @Input() selectedDatas: ArrayList<any>;
+  @Input() selectedDatas: ArrayList<any> = new ArrayList<any>();
   @Input() map: Map<any, any>;
   @Input() limit: number = 10;
   @Input('sortBy') sortKey:string;
@@ -160,7 +169,6 @@ export class DataTableComponent implements OnInit {
       }
     )
   }
-
 
   private compare(a, b, key):number {
     if (this.getType(key)=='number' || this.getType(key)=='currency') {

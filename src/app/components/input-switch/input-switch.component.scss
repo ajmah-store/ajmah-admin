@@ -1,0 +1,74 @@
+@import "../../app-theme.scss";
+
+.switch-container {
+    @include flex;
+    justify-content: center;
+
+    .switch-track {
+        @include flex;
+        @include app-transition(all);
+
+        align-items: center;
+        height: 30px;
+        padding-left: 20px;
+        padding-right: 0px;
+        position: relative;
+        background: transparent;
+        border: 2px solid color(idle);
+        border-radius: 30px;
+        min-width: 50px;
+        cursor: pointer;
+
+        .switch-label {
+            font-size: 0.8em;
+            font-weight: 500;
+            color: color(idle);
+            background: transparent;
+            padding: 0px padding(0.5);
+        }
+
+        .switch-thumb {
+            position: absolute;
+            //top: 2.5px;
+            left: 3px;
+            @include flex;
+            width: 20px;
+            height: 20px;
+            border-radius: 35px;
+            background: color(idle);
+            color: color(light);
+            @include app-transition(all);
+            padding: 0;
+            transform-origin: 50% 50%;
+
+            &:active {
+                transform: scale(0.9, 0.9);
+            }
+
+            .material-icons { margin: auto; font-size: 0.7em; }
+        }
+
+        &.on {
+            background: color(primary);
+            border-color: color(primary);
+            padding-left: 0px;
+            padding-right: 20px;
+
+            .switch-label { color: color(light); }
+
+            .switch-thumb {
+                animation: thumb-anim $app-transition-duration $app-transition-easing;
+                left: calc(100% - 23px);
+                background: color(light);
+            }
+        }
+
+    }
+}
+
+
+@keyframes thumb-anim {
+    0% { transform: scale(1,1) }
+    50% { transform: scale(1.2,0.8) }
+    100% { transform: scale(1,1) }
+}

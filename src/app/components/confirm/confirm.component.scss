@@ -1,0 +1,60 @@
+@import '../../app-theme.scss';
+
+.confirm {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    background: rgba(0,0,0,0.5);
+
+    @include flex;
+
+    .confirm-body {
+        margin: auto;
+        width: 50%;
+        min-width: 300px;
+        background: color(light);
+        border: $app-border-width solid $app-divider;
+        overflow: hidden;
+        z-index: 1;
+
+        @include app-border-radius;
+        @include flex(column);
+        @include app-padding;
+
+        .confirm-title {
+            color: $app-text;
+            font-weight: 500;
+            font-size: 1.2em;
+
+            @include app-padding(0.5);
+        }
+
+        .confirm-content {
+            color: $app-text-secondary;
+            font-weight: 400;
+            font-size: 1em;
+
+            @include app-padding(0.5);
+        }
+
+        .confirm-actions {
+
+            @include flex(row-reverse);
+
+            [class^='confirm-action-'] {
+                background: transparent;
+                color: $app-text;
+
+                @include app-padding;
+                @include app-transition(color);
+
+                &:hover {
+                    color: color(primary);
+                }
+            }
+        }
+    }
+}

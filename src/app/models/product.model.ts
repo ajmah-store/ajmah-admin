@@ -3,10 +3,12 @@ import { Category } from "./category.model";
 export const PRODUCT_COLLECTION = "products";
 
 export class Product {
-  id:any;
-  featuredImageUrl:string;
+  id?:any;
+  featuredImageUrl?:string;
   name: string;
-  category: string | Category;
+  category: string;
   price: number;
+  unit: string;
   description: string;
+  featured:boolean = false;
 }

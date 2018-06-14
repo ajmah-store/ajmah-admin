@@ -1,0 +1,33 @@
+<app-offcanvas
+  frameTitle="Edit Product"
+  [opened]="product && isFrameOpened$(frameId.editProduct) | async">
+
+  <div class="product-frame-content">
+    <form class="edit-product-form" [formGroup]="productForm" (submit)="editProduct()">
+      <div class="product-general-details">
+        <!-- Featured Image -->
+        <app-input-image [imageUrl]="product?product.featuredImageUrl:''" (change)="selectImage($event)" #featuredImageInput></app-input-image>
+        <!-- Name, Category -->
+        <div class="product-details">
+          <app-input-switch label="featured" icon-on="home"></app-input-switch>
+          <div class="spacer"></div>
+          <app-input-text placeholder="Product Name" formControlName="name" [invalid]="isInvalid('name')"></app-input-text>
+          <div class="spacer"></div>
+          <app-input-select formControlName="category" [options]="categories$ | async" placeholder="Category" [invalid]="isInvalid('category')"></app-input-select>
+          <div class="spacer"></div>
+          <app-input-currency placeholder="Price" formControlName="price" [invalid]="isInvalid('price')"></app-input-currency>
+          <div class="spacer"></div>
+          <app-input-text placeholder="Unit" formControlName="unit" [invalid]="isInvalid('unit')"></app-input-text>
+        </div>
+      </div>
+      <div class="product-desc">
+        <label for="productDescription">Description</label>
+        <textarea formControlName="description" class="input-textarea" [class.invalid]="isInvalid('description')"></textarea>
+      </div>
+      <div class="spacer"></div>
+      <app-progress-button iconLeft="true" [task]="addTask" class="bounceIn" *ngIf="productForm.valid && featuredImage"><i class="material-icons">update</i>Update Product</app-progress-button>
+      <div class="spacer"></div>
+    </form>
+  </div>
+
+</app-offcanvas>

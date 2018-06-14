@@ -6,8 +6,7 @@ import { Component, OnInit, ViewChild, ElementRef, Input, EventEmitter, Output }
   styleUrls: ['./input-image.component.scss'],
 })
 export class InputImageComponent implements OnInit {
-
-  image:File;
+  
   @Input() options:any = {
     type: 'blob',
     size: { width: 500, height: 500 },
@@ -15,6 +14,8 @@ export class InputImageComponent implements OnInit {
     quality: 1,
     circle: false
   };
+
+  private _imageUrl:string;
 
   imageCrop: Croppie;
 
@@ -32,16 +33,29 @@ export class InputImageComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if(this.imageUrl) {
+      this.imagePreview.nativeElement.src = this.imageUrl;
+    }
+  }
+
+  get imageUrl():string {
+    return this._imageUrl;
+  }
+
+  @Input()
+  set imageUrl(url:string) {
+    this._imageUrl = url;
+    this.imagePreview.nativeElement.src = url;
   }
 
   selectImage(files:FileList) {
     let file:File = files[0];
     if(file && file.type === 'image/jpeg' && FileReader) {
-      this.image = file;
       //this.hidePreview = false;
       let fr = new FileReader();
       fr.onload = () => {
-        this.imagePreview.nativeElement.src = fr.result;
+        this.imageUrl = fr.result;
+        // this.imagePreview.nativeElement.src = fr.result;
         this.showCrop();
       };
       fr.readAsDataURL(file);
@@ -78,7 +92,7 @@ export class InputImageComponent implements OnInit {
 
   flip() {
     this.imageCrop.bind({
-      url: this.imagePreview.nativeElement.src,
+      url: this.imageUrl,
       orientation: this.imageFlipped?1:2,
       zoom: this.imageCrop.get().zoom
     });
@@ -95,7 +109,7 @@ export class InputImageComponent implements OnInit {
   }
 
   reset() {
-    this.image = null;
+    this.imageUrl = null;
     this.imageCrop.destroy();
     this.imagePreview.nativeElement.src = '';
   }

@@ -3,15 +3,27 @@
       <app-input-text class="search" [(ngModel)]="searchTxt" placeholder="Search..."></app-input-text>
       
       <div class="action-grp push-right">
-          <!-- <button
+          <button
             class="action-btn icon-left"
-            [class.active]="isFrameOpened$(frameId.addProduct) | async"
-            (click)="openFrame(frameId.addProduct)">
+            [class.active]="isFrameOpened$(frameId.addCategory) | async"
+            (click)="toggleFrame(frameId.addCategory)">
       
-            <i class="material-icons md-18">add</i> Add Product
-        </button> -->
+            <i class="material-icons md-18">add</i> Add Category
+        </button>
       </div>
     </div>
     <div class="content">
+      <div style="width:50%;">
+          <app-data-table
+          [datas]="filteredCategories()"
+          [keys]="datatableKeys"
+          [attributes]="datatableAttrs"
+          [selectedDatas]="selectedCategories"
+          limit="10"
+          sortBy="name"
+        ></app-data-table>
+      </div>
     </div>
+
+    <app-add-category></app-add-category>
   </div>

@@ -16,7 +16,7 @@ export class InputSelectComponent implements OnInit, ControlValueAccessor {
   private _value:string;
 
   searchTxt:string = '';
-  content:string;
+  selectedOption:SelectOption;
   dropdown:boolean = false;
 
   @Input() options: SelectOption[] = [];
@@ -34,7 +34,7 @@ export class InputSelectComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
     if(this.def){
       this._value = this.def.value;
-      this.content = this.def.content;
+      this.selectedOption = this.def;
     }
   }
 
@@ -42,8 +42,10 @@ export class InputSelectComponent implements OnInit, ControlValueAccessor {
     return this._value;
   }
 
+  @Input()
   set value(val:string) {
     this._value = val;
+    this.updateSelectedOption();
     this.onChange(val);
     this.emitChange();
   }
@@ -78,13 +80,17 @@ export class InputSelectComponent implements OnInit, ControlValueAccessor {
 
   selectOption(option:SelectOption) {
     this.value = option.value;
-    this.content = option.content;
     this.toggleDropdown();
+  }
+
+  updateSelectedOption() {
+    if(this.options) this.selectedOption = this.options.find(option => option.value == this.value);
   }
 
 }
 
 export interface SelectOption {
+  image?: string;
   value: string;
   content: string;
 }

@@ -13,6 +13,8 @@ import { SelectOption } from '../../components/input-select/input-select.compone
 
 import { Product } from '../../models/product.model';
 import { InputImageComponent } from '../../components/input-image/input-image.component';
+import { CreateAlert } from '../../store/actions/ui.actions';
+import { ALERT_TYPES } from '../../models/alert.model';
 
 @Component({
   selector: 'app-add-product',
@@ -30,7 +32,7 @@ export class AddProductComponent implements OnInit {
 
   productForm: FormGroup;
 
-  taskChange$: Observable<number>;
+  addTask: Promise<void>;
 
   //showProgress: boolean = false;
 
@@ -42,21 +44,20 @@ export class AddProductComponent implements OnInit {
   ngOnInit() {
     this.categories$ = this.ps.getCategories().pipe(map(
       (categories) => {
-        return categories.map(category => ({value: category.id, content: category.name}));
+        return categories.map(category => ({value: category.id, content: category.name, image: category.imageUrl}));
       }
     ));
-
-    console.log(this.categories$);
     
-
     this.createProductForm();
   }
 
   createProductForm() {
     this.productForm = this.fb.group({
       'name': ['', Validators.compose([Validators.required, Validators.pattern("[A-Za-z_][A-Za-z0-9_ ]*")])],
+      'featured': [false, Validators.required],
       'category': ['', Validators.required],
       'price': ['', Validators.compose([Validators.required, Validators.pattern("[0-9]*(\.[0-9]*)?")])],
+      'unit': ['', Validators.required],
       'description': ['', Validators.required]
     });
   }
@@ -71,7 +72,7 @@ export class AddProductComponent implements OnInit {
 
   isInvalid(controlName:string) {
     let control = this.productForm.controls[controlName];
-    return control.invalid && !control.pristine;
+    return control.invalid && control.dirty;
   }
 
 
@@ -82,45 +83,42 @@ export class AddProductComponent implements OnInit {
       //create product object
       let formValue = this.productForm.value;
       
-      let product = {
+      let product:Product = {
         id: null,
-        featuredImageUrl: null, 
+        featuredImageUrl: null,
+        featured: formValue.featured,
         name: formValue.name.trim(),
         category: formValue.category,
-        price: formValue.price,
+        price: parseFloat(formValue.price),
+        unit: formValue.unit.trim(),
         description: formValue.description.trim()
       };
 
       //call addProduct
-      this.taskChange$ = this.ps.addProduct(product, this.featuredImage);
+      this.addTask = this.ps.addProduct(product, this.featuredImage);
 
-      this.taskChange$.toPromise().then(
-        val => {
-          if(val === 100) this.resetForm();
-        }
-      );
     }
     else {
-      alert('Invalid Details');
+
+      //alert error
+      this.store.dispatch(new CreateAlert({
+        type: ALERT_TYPES.DANGER,
+        title: 'Error!',
+        content: 'Invalid credentials'
+      }));
+
     }
 
-    // this.taskChange$ = new Observable(
-    //   observer => {
-    //     let i = 0;
-    //     let fn = () => {
-    //       observer.next(i);
-    //       i++;
-    //       (i <= 100) && setTimeout(fn, 50);
-    //     };
-    //     fn();
-    //   }
-    // );
+    
+    // this.addTask = new Promise((resolve, reject) => {
+    //   setTimeout(() => {reject()}, 5000);
+    // });
 
   }
 
-  resetForm() {
-    this.productForm.reset();
-    this.featuredImageInput.reset();
-  }
+  // resetForm() {
+  //   this.productForm.reset();
+  //   this.featuredImageInput.reset();
+  // }
 
 }
