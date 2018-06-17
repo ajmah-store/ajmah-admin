@@ -22,10 +22,11 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
 
   @Input() invalid:boolean = false;
   @Input() placeholder:string='';
+  @Input() icon:string;
+  @Input() type:string = "text";
 
   @Output() change: EventEmitter<string> = new EventEmitter();
   @Output() focus: EventEmitter<any> = new EventEmitter();
-  @Output() blur: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
@@ -61,8 +62,7 @@ export class InputTextComponent implements OnInit, ControlValueAccessor {
 
   setFocused(val:boolean) {
     this.focused = val;
-    if(val) this.focus.emit();
-    else this.blur.emit();
+    this.focus.emit(val);
   }
 
 }

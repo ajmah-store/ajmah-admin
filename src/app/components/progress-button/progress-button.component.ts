@@ -13,6 +13,7 @@ export class ProgressButtonComponent implements OnInit {
   @Input() type:string = 'submit';
   @Input() iconLeft:boolean = false;
   @Input() iconRight:boolean = false;
+  @Input() disabled:boolean = false;
 
   @Output() click = new EventEmitter<any>();
   @Output() complete = new EventEmitter<any>();
@@ -55,8 +56,12 @@ export class ProgressButtonComponent implements OnInit {
 
   emitClick() {
 
-    this.click.emit();
+    //this.click.emit();
 
+  }
+
+  reset() {
+    setTimeout(() => { this.state = 'normal' }, 1000);
   }
 
   changeState(val:Promise<any>) {
@@ -73,6 +78,9 @@ export class ProgressButtonComponent implements OnInit {
         //emit complete event
         this.complete.emit();
 
+        //reset button
+        this.reset();
+
       }).catch(error => {
 
         //set state to error
@@ -80,6 +88,9 @@ export class ProgressButtonComponent implements OnInit {
 
         //emit error event
         this.error.emit();
+
+        //reset button
+        this.reset();
 
       });
     }

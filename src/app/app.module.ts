@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireStorageModule } from 'angularfire2/storage';
+import { AngularFireAuthModule } from "angularfire2/auth";
 
 import { AppStoreModule } from './store/app-store.module';
 import { environment } from '../environments/environment';
@@ -33,6 +34,7 @@ import { AddCategoryComponent } from './partials/add-category/add-category.compo
 import { InputSwitchComponent } from './components/input-switch/input-switch.component';
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { EditProductComponent } from './partials/edit-product/edit-product.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import { EditProductComponent } from './partials/edit-product/edit-product.compo
     InputSwitchComponent,
     ConfirmComponent,
     EditProductComponent,
+    LoginPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +71,7 @@ import { EditProductComponent } from './partials/edit-product/edit-product.compo
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule.enablePersistence(),//offline data
     AngularFireStorageModule,
+    AngularFireAuthModule,
     AppStoreModule,
   ],
   providers: [],

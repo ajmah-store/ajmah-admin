@@ -8,6 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { SelectOption } from '../../components/input-select/input-select.component';
 import { map } from 'rxjs/operators';
+import { CreateAlert } from '../../store/actions/ui.actions';
+import { ALERT_TYPES } from '../../models/alert.model';
 
 @Component({
   selector: 'app-edit-product',
@@ -26,7 +28,7 @@ export class EditProductComponent implements OnInit {
 
   productForm: FormGroup;
 
-  addTask: Promise<any>;
+  updateTask: Promise<any>;
 
   constructor(
     private store: Store,
@@ -93,22 +95,33 @@ export class EditProductComponent implements OnInit {
     this.featuredImage = event.data;
   }
 
-  editProduct() {
+  updateProduct(event) {
+    event.preventDefault();
 
-    if(this.productForm.valid && this.featuredImage) {
+    if(this.productForm.valid) {
       let formValue = this.productForm.value;
 
       let product = {
         ...this.product,
         name: formValue.name.trim(),
-        featured: formValue.featured(),
+        featured: formValue.featured,
         category: formValue.category,
         price: parseFloat(formValue.price),
         unit: formValue.unit.trim(),
         description: formValue.description.trim()
       }
 
-      this.ps.updateProduct(product, this.featuredImage);
+      this.updateTask = this.ps.updateProduct(product, this.featuredImage);
+
+    }
+    else {
+
+      //alert invalid data
+      this.store.dispatch(new CreateAlert({
+        type: ALERT_TYPES.DANGER,
+        title: 'Error!',
+        content: 'Invalid credentials'
+      }));
 
     }
   }

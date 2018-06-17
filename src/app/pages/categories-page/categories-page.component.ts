@@ -7,6 +7,9 @@ import { ArrayList } from '@arjunatlast/jsds';
 import { Category } from '../../models/category.model';
 import { ProductService } from '../../services/product.service';
 
+import { Chart } from "chart.js"
+import { chartColors, randomData } from '../../helpers';
+
 @Component({
   selector: 'app-categories-page',
   templateUrl: './categories-page.component.html',
@@ -31,6 +34,10 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
   //subscriptions
   private subscriptions:Subscription[] = [];
 
+  //charts
+  productCountChart:any;
+  salesChart:any;
+
   constructor(
     private store: Store,
     private ps: ProductService
@@ -50,6 +57,11 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
 
             //store it to categories
             this.categories = categoryList
+
+            //create charts
+            this.createProductCountChart(categoryList);
+            this.createSalesChart(categoryList);
+
           }
         }
       )
@@ -67,6 +79,83 @@ export class CategoriesPageComponent implements OnInit, OnDestroy {
 
   toggleFrame(id:number) {
     this.store.dispatch(new ToggleOffCanvas(id));
+  }
+
+  private createProductCountChart(categories:ArrayList<Category>) {
+
+    if(categories) {
+
+      //categories size
+      let size = categories.size();
+
+      //extract data and labels
+      let labels = [];
+      let count = [];
+
+      categories.forEach(
+        (category: Category) => {
+          labels.push(category.name);
+          count.push(category.productCount);
+        }
+      );
+
+
+      //create the product count chart
+      this.productCountChart = new Chart('product_count_chart', {
+        type: 'doughnut',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: count,
+            backgroundColor: chartColors(size,80,50,0.8),
+          }],
+        },
+        options: {
+          responsive: true,
+          legend: {
+            position: 'right',
+          },
+        }
+      });
+
+    }
+
+  }
+
+  /**
+   * Create Sales / Category Chart
+   */
+  private createSalesChart(categories:ArrayList<Category>) {
+
+    if(categories) {
+
+      //size of categories
+      let size = categories.size();
+
+      //extract data and labels
+      let labels = categories.toArray().map(x => x.name);
+      let sales = randomData(size);
+
+      this.salesChart = new Chart('sales_chart',{
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            data: sales,
+            backgroundColor: chartColors(size,80,50,0.5),
+            borderColor: chartColors(size),
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          legend: {
+            display: false
+          },
+        }
+      })
+    }
+
   }
 
   ngOnDestroy() {

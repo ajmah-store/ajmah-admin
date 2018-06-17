@@ -1,6 +1,6 @@
 <div class="fill-page page" id="categoriesPage">
     <div class="action-bar">
-      <app-input-text class="search" [(ngModel)]="searchTxt" placeholder="Search..."></app-input-text>
+      <app-input-text class="search" icon="search" [(ngModel)]="searchTxt" placeholder="Search..."></app-input-text>
       
       <div class="action-grp push-right">
           <button
@@ -13,15 +13,40 @@
       </div>
     </div>
     <div class="content">
-      <div style="width:50%;">
+      <div class="uk-grid-small uk-child-width-1-2@m uk-child-width-1-1@s" uk-grid="masonry: true">
+        <div class="data-table">
           <app-data-table
-          [datas]="filteredCategories()"
-          [keys]="datatableKeys"
-          [attributes]="datatableAttrs"
-          [selectedDatas]="selectedCategories"
-          limit="10"
-          sortBy="name"
-        ></app-data-table>
+            [datas]="filteredCategories()"
+            [keys]="datatableKeys"
+            [attributes]="datatableAttrs"
+            [selectedDatas]="selectedCategories"
+            limit="10"
+            sortBy="name"
+          ></app-data-table>
+        </div>
+
+        <div>
+
+          <div class="product-count-chart card">
+            <h4 class="card-title"><i class="material-icons">donut_small</i> Products / Category</h4>
+            <div class="card-content chart-container">
+              <canvas id='product_count_chart'>{{ productCountChart }}</canvas>
+            </div>
+          </div>
+
+        </div>
+
+        <div>
+
+          <div class="sales-chart card">
+            <h4 class="card-title"><i class="material-icons">bar_chart</i> Sales / Category</h4>
+            <div class="card-content chart-container">
+              <canvas id="sales_chart">{{ salesChart }}</canvas>
+            </div>
+          </div>
+
+        </div>
+        
       </div>
     </div>
 

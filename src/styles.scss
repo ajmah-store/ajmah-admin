@@ -55,9 +55,9 @@ button {
   text-transform: uppercase;
   cursor: pointer;
 
-  &[disabled] {
+  &[disabled="true"] {
     opacity: 0.5;
-    cursor: not-allowed;
+    cursor: pointer;
   }
 
   &.rounded-corners {
@@ -177,7 +177,7 @@ $i:0;
     height: $app-titlebar-height;
     background: color(light);
     border-bottom: $app-border-width solid $app-divider;
-    @include app-padding(0.5);
+    @include app-padding;
 
     app-input-text.search { flex:1 }
 
@@ -225,6 +225,32 @@ $i:0;
       }
     }
   }//action-bar
+}
+
+//cards
+.card {
+  background: color(light);
+  border: $app-border-width solid $app-divider;
+  @include app-border-radius;
+
+  .card-title {
+    font-weight: 500;
+    @include app-padding;
+    @include flex;
+    align-items: center;
+    margin: 0;
+
+    .material-icons { margin-right: padding(1)}
+  }
+
+  .card-content {
+    @include app-padding;
+  }
+}
+
+//chart-container
+.chart-container {
+  position: relative;
 }
 
 //Croppie

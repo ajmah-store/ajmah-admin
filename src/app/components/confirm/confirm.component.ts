@@ -28,7 +28,7 @@ export class ConfirmComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.confirm);
+    //console.log(this.confirm);
   }
 
   okButtonClicked() {

@@ -1,10 +1,10 @@
-<button [type]="type" class="progress-btn" [ngClass]="getStyle()" (click)="emitClick()" [disabled]="!checkState('normal')">
-  <div class="progress-button-content" *ngIf="this.checkState('normal')"><ng-content></ng-content></div>
+<button [type]="type" class="progress-btn" [ngClass]="getStyle()" (click)="emitClick()" [disabled]="disabled || !checkState('normal')">
+  <div class="progress-button-content" *ngIf="checkState('normal')"><ng-content></ng-content></div>
   <div *ngIf="this.checkState('pending')" class="progress-bar">
     <div class="progress-bar-dot"></div>
     <div class="progress-bar-dot"></div>
     <div class="progress-bar-dot"></div>
   </div>
-  <div class="progress-button-content" *ngIf="this.checkState('complete')"><i class="material-icons md-24">check_circle_outline</i></div>
-  <div class="progress-button-content" *ngIf="this.checkState('error')"><i class="material-icons md-24">error_outline</i></div>
+  <div class="progress-button-content" *ngIf="checkState('complete')"><i class="material-icons md-24">check_circle_outline</i></div>
+  <div class="progress-button-content" *ngIf="checkState('error')"><i class="material-icons md-24">error_outline</i></div>
 </button>

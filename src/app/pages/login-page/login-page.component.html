@@ -1,0 +1,24 @@
+<div id="loginPage">
+
+  <div class="form-container">
+    <div class="form-image">
+      <img src="/assets/login.svg">
+    </div>
+
+    <form class="login-form" [formGroup]="loginForm" (submit)="login()">
+      <div class="form-title">Admin Login</div>
+      <div class="spacer double"></div>
+      <app-input-text formControlName="email" placeholder="Email" icon="mail_outline" [invalid]="isInvalid('email')"></app-input-text>
+      <div class="spacer"></div>
+      <app-input-text formControlName="password" type="password" placeholder="Password" icon="lock_open" [invalid]="isInvalid('password')"></app-input-text>
+      <div class="spacer"></div>
+      <a class="forgot-password">Forgot Password?</a>
+      <div class="spacer double"></div>
+      <app-progress-button class="bounceIn" *ngIf="loginForm.valid" iconLeft="true" [task]="loginTask">
+          <i class="material-icons md-18">exit_to_app</i>
+          Login
+      </app-progress-button>
+    </form>
+  </div>
+
+</div>

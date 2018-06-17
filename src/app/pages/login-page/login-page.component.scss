@@ -1,0 +1,65 @@
+@import "../../app-theme.scss";
+
+#loginPage {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(45deg, $app-primary, $app-primary-dark);
+    @include flex;
+
+    .form-container {
+        @include flex;
+        @include app-border-radius;
+        @include app-padding(2);
+
+        width: 50%;
+        min-width: 500px + $app-padding*4;
+        background: color(light);
+        margin: auto;
+        align-items: stretch;
+
+        .form-image {
+            flex: 1;
+            @include flex;
+            @include app-padding;
+            align-items: center;
+            justify-content: center;
+
+            img {
+                width: 100%;
+            }
+        }
+
+
+        .login-form {
+            @include flex(column);
+            @include app-padding;
+            flex: 1;
+
+            align-items: center;
+            justify-content: center;
+
+            .form-title {
+                font-size: 1.5em;
+                font-weight: 700;
+            }
+
+            .forgot-password {
+                width: 100%;
+                text-align: right;
+                color: $app-text-secondary;
+                font-weight: 500;
+                font-size: 0.9em;
+                @include app-transition(color);
+
+                &:hover {
+                    text-decoration: none;
+                    color: $app-text;
+                }
+            }
+
+            app-input-text {
+                width: 100%;
+            }
+        }
+    }
+}

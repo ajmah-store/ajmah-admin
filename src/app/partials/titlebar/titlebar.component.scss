@@ -16,5 +16,9 @@
       color: $app-text;
       //background: transparentize(color(primary), 0.9);
     }
+
+    &#btn-signout {
+      margin-left: auto;
+    }
   }
 }

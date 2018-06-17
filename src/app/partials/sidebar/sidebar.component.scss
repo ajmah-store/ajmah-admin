@@ -1,7 +1,9 @@
 @import "../../app-theme.scss";
 
 #sidebar {
-  width: 200px + $app-border-width;
+  $size: 200px + 2*$app-padding + $app-border-width;
+
+  width: $size;
   height: 100vh;
   background: color(light);
   border-right: $app-border-width solid $app-divider;
@@ -47,7 +49,7 @@
 
     .brand-title {
       @include brand;
-      width: 128px;
+      width: 160px;
       overflow: hidden;
       text-align: center;
       color: color(dark);

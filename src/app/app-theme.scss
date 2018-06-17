@@ -6,7 +6,7 @@ $app-accent: $app-primary;
 $app-light: #FCFCFC;
 $app-dark: #212121;
 
-$app-primary-dark: darken($app-primary, 10%);
+$app-primary-dark: darken($app-primary, 30%);
 $app-primary-light: lighten($app-primary, 45%);
 //text
 $app-text: $app-dark;

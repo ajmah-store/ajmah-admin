@@ -4,11 +4,14 @@ import { DashboardPageComponent } from './pages/dashboard-page/dashboard-page.co
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ProductsPageComponent } from './pages/products-page/products-page.component';
 import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
+import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   {
     path: "dashboard",
     component: DashboardPageComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: "home",
@@ -34,10 +37,14 @@ const routes: Routes = [
     ]
   },
   {
+    path: "login",
+    component: LoginPageComponent
+  },
+  {
     path: "",
     redirectTo: "dashboard",
     pathMatch: "full"
-  },
+  }
 ];
 
 @NgModule({

@@ -15,7 +15,7 @@
         position: relative;
         background: transparent;
         border: 2px solid color(idle);
-        border-radius: 30px;
+        border-radius: $app-border-radius * 5;
         min-width: 50px;
         cursor: pointer;
 
@@ -34,7 +34,7 @@
             @include flex;
             width: 20px;
             height: 20px;
-            border-radius: 35px;
+            border-radius: $app-border-radius * 5;
             background: color(idle);
             color: color(light);
             @include app-transition(all);

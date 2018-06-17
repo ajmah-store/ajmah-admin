@@ -22,6 +22,7 @@
 
   .label {
     font-weight: 500;
+    font-size: 0.9em;
     color: $app-text;
     @include app-padding(0.5);
   }

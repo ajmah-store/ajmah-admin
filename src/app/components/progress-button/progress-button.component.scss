@@ -1,16 +1,22 @@
 @import "../../app-theme.scss";
 
 .progress-btn {
+
+  $size: 24px + $app-padding;
+
   @include app-transition(all);
-  @include app-border-radius(50rem);
+  
+  border-radius: $app-border-radius;
   padding: 0px padding(1);
-  height: 55px;
+  height: $size;
+  width: 100%;
   overflow: hidden !important;
   top: 0px;
   
 
   &[disabled] {
     opacity: 1;
+    cursor: initial;
   }
 
   .progress-button-content {
@@ -20,21 +26,15 @@
     justify-content: center;
   }
 
-  // &.normal {
-  //   background: color(light);
-  //   color: color(primary);
-  //   border: 3px solid color(primary);
-
-  //   &:hover {
-  //     background: color(primary);
-  //     color: color(light);
-  //   }
-  // }
+  &.normal[disabled] {
+    opacity: 0.3;
+  }
 
   &.progress {
     padding: 0px;
-    width: 55px;
+    width: $size;
     background: color(info);
+    cursor: progress;
 
     .progress-bar {
       display: flex;
@@ -71,14 +71,14 @@
 
   &.complete {
     padding: 0;
-    width: 55px;
+    width: $size;
     background: color(success);
     animation: scale $app-transition-duration $app-transition-easing;
   }
 
   &.error {
     padding: 0;
-    width: 55px;
+    width: $size;
     background: color(danger);
     animation: scale $app-transition-duration $app-transition-easing;
   }

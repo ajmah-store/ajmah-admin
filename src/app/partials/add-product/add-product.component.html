@@ -25,7 +25,7 @@
         <textarea formControlName="description" class="input-textarea" [class.invalid]="isInvalid('description')"></textarea>
       </div>
       <div class="spacer"></div>
-      <app-progress-button iconLeft="true" [task]="addTask" class="bounceIn" ><i class="material-icons">add</i>Add Product</app-progress-button>
+      <app-progress-button iconLeft="true" [task]="addTask" class="bounceIn" *ngIf="productForm.valid && featuredImage"><i class="material-icons">add</i>Add Product</app-progress-button>
       <div class="spacer"></div>
     </form>
   </div>

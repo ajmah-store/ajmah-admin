@@ -1,3 +1,4 @@
-<div class="input-grp" [class.invalid]="invalid">
-  <input type="text" (focus)="setFocused(true)" (blur)="setFocused(false)" [placeholder]="placeholder" [(ngModel)]="value" >
+<div class="input-grp" [class.invalid]="invalid" [class.focus]="focused">
+  <i class="icon material-icons md-18" >{{icon}}</i>
+  <input [type]="type" (focus)="setFocused(true)" (blur)="setFocused(false)" [placeholder]="placeholder" [(ngModel)]="value" >
 </div>

@@ -1,10 +1,13 @@
 @import "../../app-theme.scss";
 
 .off-canvas-frame {
+
+  $size: 300px + 2*$app-padding + $app-border-width;
+
   position: absolute;
-  right: -(300px + $app-border-width);
+  right: -($size);
   top: $app-titlebar-height;
-  width: 300px + $app-border-width;
+  width: $size;
   height: calc(100% - #{$app-titlebar-height});
   background: color(light);
   border-left: $app-border-width solid $app-divider;
@@ -15,7 +18,7 @@
     right: 0px;
     &.maximized {
       width: 100%;
-      min-width: 300px;
+      min-width: $size;
       border-left: none;
     }
   }

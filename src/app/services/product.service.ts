@@ -150,26 +150,6 @@ export class ProductService {
 
       //add to firestore
       await this.fs.collection(PRODUCT_COLLECTION).doc(product.id).set(product);
-
-      //get the category to update product count
-      const category = await this.fs.collection(CATEGORY_COLLECTION).doc(product.category);
-
-      //run transaction to increment count
-      await this.fs.firestore.runTransaction(
-
-        async transaction => {
-
-          let categoryDoc = await transaction.get(category.ref);
-
-          //check if category exists
-          if(!categoryDoc.exists) throw new Error('Category does not exist');
-
-          //increment product count
-          let newProductCount = categoryDoc.data().productCount + 1;
-
-          transaction.update(category.ref, { productCount: newProductCount });
-        }
-      );
       
       //alert success message
       this.store.dispatch(new CreateAlert({
@@ -190,7 +170,7 @@ export class ProductService {
 
       console.log(error);
 
-      return error;
+      throw error;
 
     }
 
@@ -215,27 +195,6 @@ export class ProductService {
       //delete the image from storage
       await this.storage.ref(path).delete().toPromise();
 
-      //get the category to update product count
-      const category = await this.fs.collection(CATEGORY_COLLECTION).doc(product.category);
-
-      //run transaction to decrement count
-      await this.fs.firestore.runTransaction(
-
-        async transaction => {
-
-          let categoryDoc = await transaction.get(category.ref);
-
-          //check if category exists
-          if(!categoryDoc.exists) throw new Error('Category does not exist');
-
-          //increment product count
-          let newProductCount = categoryDoc.data().productCount - 1;
-
-          transaction.update(category.ref, { productCount: newProductCount });
-        }
-      );
-
-
       //alert success
       this.store.dispatch(new CreateAlert({
         type: ALERT_TYPES.SUCCESS,
@@ -257,7 +216,8 @@ export class ProductService {
       //log error
       console.log(error);
 
-      return error;
+      //throw the error back
+      throw error;
 
     }
     
@@ -311,7 +271,8 @@ export class ProductService {
       //log error
       console.log(error);
 
-      return error;
+      //throw the error back
+      throw error;
 
     }
 
@@ -333,8 +294,9 @@ export class ProductService {
     //generate an id
     category.id = this.fs.createId();
 
-    //set product count as 0
+    //set product count and sales count as 0
     category.productCount = 0;
+    category.salesCount = 0;
 
     //path to store featured image
     const path = `${this.CATEGORY_IMAGE_PATH}/${category.id}`;
@@ -375,7 +337,8 @@ export class ProductService {
       //log error
       console.log(error);
 
-      return error;
+      //throw the error back
+      throw error;
 
     }
 

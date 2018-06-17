@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { Alert, ALERT_TYPES } from './models/alert.model';
 import { DismissAlert, CreateAlert } from './store/actions/ui.actions';
 import { Confirm } from './models/confirm.model';
+import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +20,12 @@ export class AppComponent implements OnInit {
   confirm$: Observable<Confirm>;
 
   constructor(
-    private store:Store
-  ) {}
+    private store:Store,
+    private auth: AuthService,
+    private router: Router
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.alert$ = this.store.select(store => store.ui.alert);
