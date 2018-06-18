@@ -1,5 +1,3 @@
-import { Category } from "./category.model";
-
 export const PRODUCT_COLLECTION = "products";
 
 export class Product {
@@ -10,5 +8,6 @@ export class Product {
   price: number;
   unit: string;
   description: string;
-  featured:boolean = false;
+  featured?:boolean;
+  discount?:number;
 }

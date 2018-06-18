@@ -15,6 +15,9 @@ import { ALERT_TYPES } from '../models/alert.model';
 
 import { Dictionary, ArrayList } from '@arjunatlast/jsds';
 import { map } from 'rxjs/operators';
+import { AuthService } from './auth.service';
+import { UploadMetadata } from '@firebase/storage-types';
+import { UploadTaskSnapshot } from 'angularfire2/storage/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +36,22 @@ export class ProductService {
   constructor(
     private fs: AngularFirestore,
     private storage: AngularFireStorage,
-    private store:Store
+    private store:Store,
+    private auth: AuthService
   ) { }
+
+
+  /**
+   * Private Metadata generate function
+   */
+  private generateMetadata():UploadMetadata {
+    return {
+      customMetadata: {
+        userId: this.auth.userId,
+      },
+      contentType: 'image/jpeg',
+    }
+  }
 
     /**
    * Return all categories from the database wrapped as Observable
@@ -125,25 +142,32 @@ export class ProductService {
    * Add a product to database.
    * @param {Product} product Product to be added
    * @param {Blob} featuredImage featured image to be tagged with the product
-   * @returns Observable that tracks task progress
+   * @returns {Promise} A Promise that resolves once the addition is complete
    */
   async addProduct(product:Product, featuredImage:Blob): Promise<void> {
 
-    let uploadTask:AngularFireUploadTask;
-
-    //create id
-    product.id = this.fs.createId();
-
-    //path to store featured image
-    const path = `images/products/${product.id}`;
-
-    //upload featured image to storage
-    uploadTask = this.storage.upload(path, featuredImage);
-
     try {
 
+      //check if user is authorized or not
+      if(!this.auth.authenticated) throw new Error("Unauthorized");
+
+      //create upload task
+      let uploadTask:AngularFireUploadTask;
+
+      //create id
+      product.id = this.fs.createId();
+
+      //path to store featured image
+      const path = `images/products/${product.id}`;
+
+      //metadata
+      const metadata = this.generateMetadata();
+
+      //upload featured image to storage
+      uploadTask = this.storage.upload(path, featuredImage, metadata);
+
       //wait for upload to complete
-      let snap = await uploadTask.then(snap => snap);
+      let snap: UploadTaskSnapshot = await uploadTask.then(snap => snap);
 
       //get download URL of image
       product.featuredImageUrl = await snap.ref.getDownloadURL();
@@ -180,11 +204,14 @@ export class ProductService {
   /**
    * Delete a product from the database.
    * @param {Product} product Product to be deleted
-   * @return an empty Promise 
+   * @return {Promise} A Promise that resolves once deletion is complete
    */
   async deleteProduct(product:Product): Promise<void> {
     
     try {
+
+      //check if authorized or not
+      if(!this.auth.authenticated) throw new Error('Unauthorized');
 
       //remove the product from database
       await this.fs.collection(PRODUCT_COLLECTION).doc(product.id).delete();
@@ -223,10 +250,18 @@ export class ProductService {
     
   }
 
-
+  /**
+   * Update a product
+   * @param {Product} product The product to be updated
+   * @param {Blob} featuredImage The new image of the product (if changed)
+   * @returns {Promise} A Promise that resolves once upadtion is complete
+   */
   async updateProduct(product:Product, featuredImage?:Blob): Promise<void> {
 
     try {
+
+      //check if authorized or not
+      if(!this.auth.authenticated) throw new Error(`Unauthorized`);
 
       //if image was changed
       if(featuredImage) {
@@ -236,14 +271,17 @@ export class ProductService {
         //path to store the image
         const path = `${this.PRODUCT_IMAGE_PATH}/${product.id}`;
 
+        //generate metadata
+        const metadata = this.generateMetadata();
+
         //start upload
-        uploadTask = this.storage.upload(path, featuredImage);
+        uploadTask = this.storage.upload(path, featuredImage, metadata);
 
         //wait for the upload to complete
-        let snap = await uploadTask.then(snap => snap);
+        const snap: UploadTaskSnapshot = await uploadTask.then(snap => snap);
 
         //set featuredImageUrl
-        product.featuredImageUrl = snap.getDownloadURL();
+        product.featuredImageUrl = await snap.ref.getDownloadURL();
 
       }
 
@@ -288,28 +326,33 @@ export class ProductService {
    */
   async addCategory(category:Category, featuredImage: Blob): Promise<void> {
 
-    //create an upload task
-    let uploadTask:AngularFireUploadTask;
-
-    //generate an id
-    category.id = this.fs.createId();
-
-    //set product count and sales count as 0
-    category.productCount = 0;
-    category.salesCount = 0;
-
-    //path to store featured image
-    const path = `${this.CATEGORY_IMAGE_PATH}/${category.id}`;
-
-    //upload featured image to storage
-    uploadTask = this.storage.upload(path, featuredImage);
-
-    
-
     try {
 
+      //check if authorized or not
+      if(!this.auth.authenticated) throw new Error('Unauthorized');
+
+      //create an upload task
+      let uploadTask:AngularFireUploadTask;
+
+      //generate an id
+      category.id = this.fs.createId();
+
+      //set product count and sales count as 0
+      category.productCount = 0;
+      category.salesCount = 0;
+
+      //path to store featured image
+      const path = `${this.CATEGORY_IMAGE_PATH}/${category.id}`;
+
+      //generate metadata
+      const metadata = this.generateMetadata();
+
+      //upload featured image to storage
+      uploadTask = this.storage.upload(path, featuredImage, metadata);
+
       //wait for upload to complete
-      let snap = await uploadTask.then(snap => snap);
+      const snap:UploadTaskSnapshot = await uploadTask.then(snap => snap);
+
       //get download URL of featured image
       category.imageUrl = await snap.ref.getDownloadURL();
 
@@ -342,6 +385,123 @@ export class ProductService {
 
     }
 
+  }
+
+  /**
+   * Delete a category from database
+   * @param {Category} category The category to be deleted
+   * @returns {Promise} A promise that resolves once deletion is complete
+   */
+  async deleteCategory(category: Category): Promise<void> {
+
+    try {
+
+      //check if authorized or not 
+      if(!this.auth.authenticated) throw new Error('Unauthorized');
+
+      //check if category has any products associated with it if so throw an error
+      if(category.productCount) throw new Error('Illegal Operation.');
+
+      //delete category from firestore
+      await this.fs.collection(CATEGORY_COLLECTION).doc(category.id).delete();
+
+      //path to the image
+      const path = `${this.CATEGORY_IMAGE_PATH}/${category.id}`;
+
+      //delete image from storage
+      await this.storage.ref(path).delete().toPromise();
+
+      //alert success
+      this.store.dispatch(new CreateAlert({
+        type: ALERT_TYPES.SUCCESS,
+        title: 'Category Deleted',
+        content: `The category ${category.name} has been removed from the store.`
+      }));
+
+    }
+
+    catch(error) {
+
+      //alert error
+      this.store.dispatch(new CreateAlert({
+        type: ALERT_TYPES.DANGER,
+        title: 'Error!',
+        content: `An Error occured while deleting the category ${category.name}`
+      }));
+
+      //log error
+      console.log(error);
+
+      //rethrow error
+      throw error;
+
+    }
+  }
+
+  /**
+   * Update a category
+   * @param {Category} category The category to be updated
+   * @param {Blob} featuredImage new image of the category (if changed)
+   * @returns {Promise} A promise that resolves once the updation is complete
+   */
+  async updateCategory(category: Category, featuredImage: Blob): Promise<void> {
+
+    try {
+
+      //check if authorized or not
+      if(!this.auth.authenticated) throw new Error('Unauthorized access');
+
+      //if image has been changed upload it to storage
+      if(featuredImage) {
+
+        //create an upload task
+        let uploadTask: AngularFireUploadTask;
+
+        //path to store the image
+        const path = `${this.CATEGORY_IMAGE_PATH}/${category.id}`;
+
+        //generate metadata
+        const metadata = this.generateMetadata();
+
+        //begin upload
+        uploadTask = this.storage.upload(path, featuredImage, metadata);
+
+        //get snapshot of uploadTask once completed
+        const snap: UploadTaskSnapshot = await uploadTask.then(snap => snap);
+
+        //set image url of category as downloadURL
+        category.imageUrl = await snap.ref.getDownloadURL();
+
+      }
+
+      //update data on firestore
+      await this.fs.collection(CATEGORY_COLLECTION).doc(category.id).update(category);
+
+      //alert success
+      this.store.dispatch(new CreateAlert({
+        type: ALERT_TYPES.SUCCESS,
+        title: 'Category Updated',
+        content: `Successfully updated the category '${category.name}'`
+      }));
+
+    }
+
+    catch(error) {
+
+      //alert error
+      this.store.dispatch({
+        type: ALERT_TYPES.DANGER,
+        title: 'Error!',
+        content: `An error occured while updating category ${category}`
+      });
+
+      //log error
+      console.log(error);
+
+      //rethrow error
+      throw error;
+
+    }
   }
 
 }

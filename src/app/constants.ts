@@ -34,5 +34,6 @@ export const sidebarLinks = [
 export const offCanvasFrames = {
     addProduct: 1,
     editProduct: 2,
-    addCategory: 3
+    addCategory: 3,
+    editCategory: 4
 };

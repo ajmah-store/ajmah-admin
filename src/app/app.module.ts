@@ -35,6 +35,7 @@ import { InputSwitchComponent } from './components/input-switch/input-switch.com
 import { ConfirmComponent } from './components/confirm/confirm.component';
 import { EditProductComponent } from './partials/edit-product/edit-product.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
+import { EditCategoryComponent } from './partials/edit-category/edit-category.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
     ConfirmComponent,
     EditProductComponent,
     LoginPageComponent,
+    EditCategoryComponent,
   ],
   imports: [
     BrowserModule,

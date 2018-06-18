@@ -12,10 +12,13 @@
         </button>
       </div>
     </div>
+    
     <div class="content">
       <div class="uk-grid-small uk-child-width-1-2@m uk-child-width-1-1@s" uk-grid="masonry: true">
         <div class="data-table">
           <app-data-table
+            (delete)="deleteCategory($event)"
+            (edit)="editCategory($event)"
             [datas]="filteredCategories()"
             [keys]="datatableKeys"
             [attributes]="datatableAttrs"
@@ -25,7 +28,7 @@
           ></app-data-table>
         </div>
 
-        <div>
+        <div [hidden]="!categories">
 
           <div class="product-count-chart card">
             <h4 class="card-title"><i class="material-icons">donut_small</i> Products / Category</h4>
@@ -36,7 +39,7 @@
 
         </div>
 
-        <div>
+        <div [hidden]="!categories">
 
           <div class="sales-chart card">
             <h4 class="card-title"><i class="material-icons">bar_chart</i> Sales / Category</h4>
@@ -51,4 +54,5 @@
     </div>
 
     <app-add-category></app-add-category>
+    <app-edit-category [category]="categoryEditted"></app-edit-category>
   </div>

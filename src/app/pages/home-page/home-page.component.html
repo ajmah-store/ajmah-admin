@@ -1,3 +1,23 @@
-<p>
-  home-page works!
-</p>
+<div class="fill-page page" id="homePage">
+
+  <div class="content">
+
+    <div class="uk-grid-small" uk-grid="masonry:true">
+
+      <div class="uk-width-1-2@m uk-width-1-1@s">
+
+        <div class="sales-chart card">
+          <h4 class="card-title">
+            <i class="material-icons">timeline</i> Yearly Sales
+          </h4>
+          <div class="card-content chart-container">
+            <canvas id="sales_chart">{{salesChart}}</canvas>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
