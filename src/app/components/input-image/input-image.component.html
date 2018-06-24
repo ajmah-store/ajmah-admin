@@ -1,4 +1,4 @@
-<div class="image-drop" dropzone (hovered)="hovered=$event" (dropped)="selectImage($event)">
+<div class="image-drop" dropzone (hovered)="hovered=$event" (dropped)="selectImage($event.files)">
   <div class="image-preview">
     <div class="image" [class.hovered]="hovered" [hidden]="!imageUrl">
       <div class="hovered-drop">

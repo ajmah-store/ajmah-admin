@@ -1,0 +1,5 @@
+<div class="input-range-container">
+  <div class="label" *ngIf="label">{{label}}</div>
+  <input type="range" class="input-range" [min]="min" [max]="max" [(ngModel)]="value" #inputRange>
+  <div class="input-fill" [ngStyle]="fill" (mousedown)="track($event)"></div>
+</div>

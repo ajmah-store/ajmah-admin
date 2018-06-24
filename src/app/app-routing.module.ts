@@ -6,6 +6,7 @@ import { ProductsPageComponent } from './pages/products-page/products-page.compo
 import { CategoriesPageComponent } from './pages/categories-page/categories-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { AuthGuard } from './guards/auth.guard';
+import { DiscountsPageComponent } from './pages/discounts-page/discounts-page.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
       {
         path: 'categories',
         component: CategoriesPageComponent
+      },
+      {
+        path: 'discounts',
+        component: DiscountsPageComponent
       },
       {
         path: "",

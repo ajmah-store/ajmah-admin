@@ -36,6 +36,9 @@ import { ConfirmComponent } from './components/confirm/confirm.component';
 import { EditProductComponent } from './partials/edit-product/edit-product.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { EditCategoryComponent } from './partials/edit-category/edit-category.component';
+import { DragItemDirective } from './directives/drag-item.directive';
+import { DiscountsPageComponent } from './pages/discounts-page/discounts-page.component';
+import { InputRangeComponent } from './components/input-range/input-range.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +66,9 @@ import { EditCategoryComponent } from './partials/edit-category/edit-category.co
     EditProductComponent,
     LoginPageComponent,
     EditCategoryComponent,
+    DragItemDirective,
+    DiscountsPageComponent,
+    InputRangeComponent,
   ],
   imports: [
     BrowserModule,

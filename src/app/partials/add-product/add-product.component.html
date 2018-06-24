@@ -18,10 +18,13 @@
           <app-input-currency placeholder="Price" formControlName="price" [invalid]="isInvalid('price')"></app-input-currency>
           <div class="spacer"></div>
           <app-input-text placeholder="Unit" formControlName="unit" [invalid]="isInvalid('unit')"></app-input-text>
+          <div class="spacer"></div>
+          <label for="discount" class="font-light">Discount: <span class="font-medium">{{productForm.controls.discount.value}}%</span></label>
+          <app-input-range min="0" max="100" formControlName="discount"></app-input-range>
         </div>
       </div>
       <div class="product-desc">
-        <label for="productDescription">Description</label>
+        <label for="productDescription" class="font-light">Description</label>
         <textarea formControlName="description" class="input-textarea" [class.invalid]="isInvalid('description')"></textarea>
       </div>
       <div class="spacer"></div>

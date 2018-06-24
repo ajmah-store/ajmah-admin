@@ -1,4 +1,4 @@
 <div class="input-grp" [class.invalid]="invalid" [class.focus]="focused">
-  <i class="icon material-icons md-18" >{{icon}}</i>
+  <i *ngIf="icon" class="icon material-icons md-18" >{{icon}}</i>
   <input [type]="type" (focus)="setFocused(true)" (blur)="setFocused(false)" [placeholder]="placeholder" [(ngModel)]="value" >
 </div>

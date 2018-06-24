@@ -70,7 +70,8 @@ export class EditProductComponent implements OnInit {
       'category': ['', Validators.required],
       'price': ['', Validators.compose([Validators.required, Validators.pattern("[0-9]*(\.[0-9]*)?")])],
       'unit': ['', Validators.required],
-      'description': ['', Validators.required]
+      'description': ['', Validators.required],
+      'discount': [0, Validators.compose([Validators.required, Validators.min(0), Validators.max(100)])]
     });
   }
 
@@ -83,6 +84,7 @@ export class EditProductComponent implements OnInit {
       controls.price.setValue(this.product.price);
       controls.unit.setValue(this.product.unit);
       controls.description.setValue(this.product.description);
+      controls.discount.setValue(this.product.discount);
     }
   }
 
@@ -108,7 +110,8 @@ export class EditProductComponent implements OnInit {
         category: formValue.category,
         price: parseFloat(formValue.price),
         unit: formValue.unit.trim(),
-        description: formValue.description.trim()
+        description: formValue.description.trim(),
+        discount: Math.abs(parseInt(formValue.discount)%100)
       }
 
       this.updateTask = this.ps.updateProduct(product, this.featuredImage);

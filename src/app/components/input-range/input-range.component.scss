@@ -1,0 +1,79 @@
+@import "../../app-theme.scss";
+
+.input-range-container {
+    position: relative;
+    height: 6px;
+    padding: 0;
+
+    .input-fill {
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0px;
+        height: 6px;
+        background: color(accent);
+
+        @include app-border-radius;
+        @include app-transition(width);
+        cursor: pointer;
+    }
+
+    input.input-range {
+        width: 100%;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        position: absolute;
+        left: 0;
+        top: 0px;
+    
+        @mixin discount-range-slider {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            
+            @include app-border-radius;                
+            background: $app-divider;
+            height: 6px;
+            cursor: pointer;
+        }
+    
+        @mixin discount-range-thumb {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+    
+            @include app-border-radius;
+    
+            background: $app-primary-dark;
+            height: 6px;
+            width: 6px;
+            cursor: pointer;
+        }
+    
+        &::-webkit-slider-runnable-track {
+            @include discount-range-slider;
+        }
+    
+        &::-moz-range-track {
+            @include discount-range-slider;
+        }
+    
+        &::-ms-track {
+            @include discount-range-slider;
+        }
+    
+        &::-webkit-slider-thumb {
+            @include discount-range-thumb;
+        }
+    
+        &::-moz-range-thumb {
+            @include discount-range-thumb;
+        }
+    
+        &::-ms-thumb {
+            @include discount-range-thumb;
+        }
+    
+    }
+}
