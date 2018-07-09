@@ -89,7 +89,7 @@ export class DataTableComponent implements OnInit {
       if(data !== undefined || data !== null) data = data[path[i]];
     }
 
-    return data;
+    return data?data:'-';
   }
 
   getType(key:string):string {

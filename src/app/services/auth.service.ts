@@ -99,9 +99,11 @@ export class AuthService {
 
       //fetch data from firestore
       const userData:any = await this.getUserData(user.uid);
+
+      console.log(userData);
       
       //check if user is authorized or not
-      if(userData.type !== USER_TYPES.ADMIN && userData.type !== USER_TYPES.EDITOR) {
+      if(parseInt(userData.type) !== USER_TYPES.ADMIN && parseInt(userData.type) !== USER_TYPES.EDITOR) {
 
         //signout user
         await this.afAuth.auth.signOut();

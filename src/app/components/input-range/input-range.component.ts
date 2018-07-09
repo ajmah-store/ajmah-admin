@@ -42,7 +42,7 @@ export class InputRangeComponent implements OnInit, ControlValueAccessor {
   get fill():any {
     const fill =  (this.value / (this.max - this.min))*100;
     return {
-      width: `calc(${fill}% - 6px)`
+      width: `calc(${fill}% - 11px)`
     };
   }
 

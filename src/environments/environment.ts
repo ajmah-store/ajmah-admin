@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyCA3VYaFY-sY5mn8Q-ZDaddsbvdBhArpB0",
-    authDomain: "fir-ajmah.firebaseapp.com",
-    databaseURL: "https://fir-ajmah.firebaseio.com",
-    projectId: "fir-ajmah",
-    storageBucket: "fir-ajmah.appspot.com",
-    messagingSenderId: "810984249240"
+    apiKey: "AIzaSyBpagFGuDeqdhsDsBkGJry0BHOlxYaCQjE",
+    authDomain: "ajmah-2a334.firebaseapp.com",
+    databaseURL: "https://ajmah-2a334.firebaseio.com",
+    projectId: "ajmah-2a334",
+    storageBucket: "ajmah-2a334.appspot.com",
+    messagingSenderId: "430990212356"
   }
 };
 

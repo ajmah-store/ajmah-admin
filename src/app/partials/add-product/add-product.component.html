@@ -9,7 +9,7 @@
         <app-input-image (change)="selectImage($event)" #featuredImageInput></app-input-image>
         <!-- Name, Category -->
         <div class="product-details">
-          <app-input-switch label="featured" icon-on="home" formControlName="featured"></app-input-switch>
+          <app-input-switch label="featured" formControlName="featured"></app-input-switch>
           <div class="spacer"></div>
           <app-input-text placeholder="Product Name" formControlName="name" [invalid]="isInvalid('name')"></app-input-text>
           <div class="spacer"></div>

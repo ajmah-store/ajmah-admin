@@ -1,16 +1,19 @@
 @import "../../app-theme.scss";
 
+$track-size: 6px;
+$thumb-size: 8px;
+
 .input-range-container {
     position: relative;
-    height: 6px;
+    height: max($thumb-size, $track-size);
     padding: 0;
 
     .input-fill {
         display: block;
         position: absolute;
         left: 0;
-        top: 0px;
-        height: 6px;
+        top: ($thumb-size - $track-size) / 2;
+        height: $track-size;
         background: color(accent);
 
         @include app-border-radius;
@@ -25,7 +28,8 @@
         -webkit-appearance: none;
         position: absolute;
         left: 0;
-        top: 0px;
+        top: ($thumb-size - $track-size)/2;
+        height: $track-size;
     
         @mixin discount-range-slider {
             appearance: none;
@@ -34,7 +38,7 @@
             
             @include app-border-radius;                
             background: $app-divider;
-            height: 6px;
+            height: $track-size;
             cursor: pointer;
         }
     
@@ -44,11 +48,17 @@
             -moz-appearance: none;
     
             @include app-border-radius;
+            @include app-transition(transform);
     
-            background: $app-primary-dark;
-            height: 6px;
-            width: 6px;
+            margin-top: ($track-size - $thumb-size) / 2;
+            background: color(primary);
+            height: $thumb-size;
+            width: $thumb-size;
             cursor: pointer;
+        }
+
+        @mixin discount-range-thumb-hover {
+            transform: scale(1.2, 1.2);
         }
     
         &::-webkit-slider-runnable-track {
@@ -73,6 +83,20 @@
     
         &::-ms-thumb {
             @include discount-range-thumb;
+        }
+
+        &:hover {
+            &::-webkit-slider-thumb {
+                @include discount-range-thumb-hover;
+            }
+        
+            &::-moz-range-thumb {
+                @include discount-range-thumb-hover;
+            }
+        
+            &::-ms-thumb {
+                @include discount-range-thumb-hover;
+            }
         }
     
     }
