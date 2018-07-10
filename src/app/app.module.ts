@@ -9,7 +9,7 @@ import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AngularFireAuthModule } from "angularfire2/auth";
 
 import { AppStoreModule } from './store/app-store.module';
-import { environment } from '../environments/environment';
+import { firebase } from '../private/firebase.config';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -76,7 +76,7 @@ import { InputRangeComponent } from './components/input-range/input-range.compon
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(firebase),
     AngularFirestoreModule.enablePersistence(),//offline data
     AngularFireStorageModule,
     AngularFireAuthModule,
