@@ -39,6 +39,7 @@ import { EditCategoryComponent } from './partials/edit-category/edit-category.co
 import { DragItemDirective } from './directives/drag-item.directive';
 import { DiscountsPageComponent } from './pages/discounts-page/discounts-page.component';
 import { InputRangeComponent } from './components/input-range/input-range.component';
+import { AngularFireFunctionsModule } from '../../node_modules/angularfire2/functions';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { InputRangeComponent } from './components/input-range/input-range.compon
     AngularFirestoreModule.enablePersistence(),//offline data
     AngularFireStorageModule,
     AngularFireAuthModule,
+    AngularFireFunctionsModule,
     AppStoreModule,
   ],
   providers: [],

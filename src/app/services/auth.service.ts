@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireFunctions} from 'angularfire2/functions'
+
 import { USERS_COLLECTION, USER_TYPES, User } from '../models/user.model';
 import { Store } from '@ngxs/store';
 import { CreateAlert } from '../store/actions/ui.actions';
 import { ALERT_TYPES } from '../models/alert.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { unusedValueExportToPlacateAjd } from '@angular/core/src/render3/interfaces/node';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -21,6 +22,7 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private fs: AngularFirestore,
+    private functions: AngularFireFunctions,
     private store: Store,
     private router: Router
   ) {
@@ -94,26 +96,39 @@ export class AuthService {
 
     try {
 
+      const getUserID = this.functions.httpsCallable('getUserID');
+
+      const uid = await getUserID(email).toPromise();
+
       //sign in with email and password
-      const user = (await this.afAuth.auth.signInWithEmailAndPassword(email, password)).user;
+      //const user = (await this.afAuth.auth.signInWithEmailAndPassword(email, password)).user;
 
       //fetch data from firestore
-      const userData:any = await this.getUserData(user.uid);
+      const userData:any = await this.getUserData(uid);
 
       console.log(userData);
       
-      //check if user is authorized or not
+      //check if user is not authorized
       if(parseInt(userData.type) !== USER_TYPES.ADMIN && parseInt(userData.type) !== USER_TYPES.EDITOR) {
 
         //signout user
-        await this.afAuth.auth.signOut();
+        //await this.afAuth.auth.signOut();
         
         //throw not authorized error
         throw { message: 'User is not Authorized' } as Error;
 
       }
 
+      //authorized
+      else {
+
+        //sign in the user
+        await this.afAuth.auth.signInWithEmailAndPassword(email, password);
+
+      }
+
     }
+
 
     catch(error) {
       

@@ -103,3 +103,28 @@ export const updateProductCount = functions.firestore.document(`${COLLECTIONS.PR
     }
     
 );
+
+
+/**
+ * Get uid of a user from their email
+ * @param {String} email Email of the user
+ * @return {Number} uid of the user
+ */
+export const getUserID = functions.https.onCall(
+    async (email, context) => {
+
+        try {
+
+            const user = await admin.auth().getUserByEmail(email);
+
+            return user.uid;
+        }
+
+        catch(error) {
+
+            throw new functions.https.HttpsError('not-found', `No user registered with the email ${email}.`);
+
+        }
+        
+    }
+);

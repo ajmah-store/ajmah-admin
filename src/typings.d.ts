@@ -1,3 +1,5 @@
+//import "chart.js";
+
 declare class Croppie {
     constructor(container: HTMLElement, options?: Croppie.CroppieOptions);
 

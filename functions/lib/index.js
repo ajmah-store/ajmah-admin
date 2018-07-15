@@ -68,4 +68,18 @@ exports.updateProductCount = functions.firestore.document(`${constants_1.COLLECT
         changeProductCount(newCategory, 1)
     ]);
 });
+/**
+ * Get uid of a user from their email
+ * @param {String} email Email of the user
+ * @return {Number} uid of the user
+ */
+exports.getUserID = functions.https.onCall((email, context) => __awaiter(this, void 0, void 0, function* () {
+    try {
+        const user = yield admin.auth().getUserByEmail(email);
+        return user.uid;
+    }
+    catch (error) {
+        throw new functions.https.HttpsError('not-found', `No user registered with the email ${email}.`);
+    }
+}));
 //# sourceMappingURL=index.js.map
