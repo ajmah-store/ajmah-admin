@@ -7,6 +7,8 @@ admin.initializeApp();
 
 const firestore = admin.firestore();
 
+const auth = admin.auth();
+
 /**
  * 
  * @param categoryRef Reference to the category document in firestore.
@@ -115,7 +117,7 @@ export const getUserID = functions.https.onCall(
 
         try {
 
-            const user = await admin.auth().getUserByEmail(email);
+            const user = await auth.getUserByEmail(email);
 
             return user.uid;
         }

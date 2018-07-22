@@ -1,9 +1,15 @@
 export class User {
     id?: any;
+    first_name: string;
+    last_name: string;
     type: number;
-    name: string;
     email: string;
-    emailVerified: boolean;
+    phone: string;
+    gender?: 'male' | 'female' | 'other';
+    dob?: Date;
+    photoURL?: string;
+    lastPasswordChange?: Date;
+    emailVerified?: boolean;
 }
 
 export const USER_TYPES = {
