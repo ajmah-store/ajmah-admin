@@ -12,7 +12,8 @@
   "main": "lib/index.js",
   "dependencies": {
     "firebase-admin": "^5.12.1",
-    "firebase-functions": "^1.0.4"
+    "firebase-functions": "^1.0.4",
+    "rxjs": "^6.2.2"
   },
   "devDependencies": {
     "tslint": "^5.8.0",

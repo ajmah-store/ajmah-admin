@@ -8,6 +8,8 @@ export class Product {
   price: number;
   unit: string;
   description: string;
-  featured?:boolean;
-  discount?:number;
+  featured?: boolean;
+  discount?: number;
+  createdAt?: Date;
+  salesCount?: number;
 }

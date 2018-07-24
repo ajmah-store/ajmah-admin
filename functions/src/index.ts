@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
 import { COLLECTIONS } from './constants';
+import { Subject } from 'rxjs';
 
 admin.initializeApp();
 
@@ -109,8 +110,8 @@ export const updateProductCount = functions.firestore.document(`${COLLECTIONS.PR
 
 /**
  * Get uid of a user from their email
- * @param {String} email Email of the user
- * @return {Number} uid of the user
+ * @param {string} email Email of the user
+ * @return {number} uid of the user
  */
 export const getUserID = functions.https.onCall(
     async (email, context) => {

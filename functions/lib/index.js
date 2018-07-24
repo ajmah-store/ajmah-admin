@@ -13,6 +13,7 @@ const admin = require("firebase-admin");
 const constants_1 = require("./constants");
 admin.initializeApp();
 const firestore = admin.firestore();
+const auth = admin.auth();
 /**
  *
  * @param categoryRef Reference to the category document in firestore.
@@ -70,12 +71,12 @@ exports.updateProductCount = functions.firestore.document(`${constants_1.COLLECT
 });
 /**
  * Get uid of a user from their email
- * @param {String} email Email of the user
- * @return {Number} uid of the user
+ * @param {string} email Email of the user
+ * @return {number} uid of the user
  */
 exports.getUserID = functions.https.onCall((email, context) => __awaiter(this, void 0, void 0, function* () {
     try {
-        const user = yield admin.auth().getUserByEmail(email);
+        const user = yield auth.getUserByEmail(email);
         return user.uid;
     }
     catch (error) {

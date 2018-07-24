@@ -157,6 +157,12 @@ export class ProductService {
       //create id
       product.id = this.fs.createId();
 
+      //set createdAt
+      product.createdAt = new Date();
+
+      //sales count set to 0
+      product.salesCount = 0;
+
       //path to store featured image
       const path = `images/products/${product.id}`;
 
