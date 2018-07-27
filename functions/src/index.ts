@@ -2,7 +2,13 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
 import { COLLECTIONS } from './constants';
-import { Subject } from 'rxjs';
+
+//Initialize express
+const express = require('express');
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
 
 admin.initializeApp();
 
@@ -40,7 +46,6 @@ const changeProductCount = (categoryRef:FirebaseFirestore.DocumentReference, cha
 
                 //log errors
                 console.error(error);
-
 
             }
 
@@ -131,3 +136,157 @@ export const getUserID = functions.https.onCall(
         
     }
 );
+
+/**
+ * Get product as object
+ * @param {number} limit number of products to display
+ * @return {Promise} array of products
+ */
+
+ export const getLatestProducts = functions.https.onCall(
+
+    async (limit) => {
+
+        try {
+
+            //get all latest products to the limit
+            const productsRef = firestore.collection(COLLECTIONS.PRODUCTS).orderBy('createdAt').limit(limit);
+
+            //get snapshot of reference
+            const productsSnap = await productsRef.get()
+
+            //get product array from snapshot and map it to an object
+            const products = productsSnap.docs.map(
+
+                async productRef => {
+
+                    //read data of products
+                    const product = productRef.data();
+
+                    //get category snapshot of each product
+                    const categorySnap = await firestore.collection(COLLECTIONS.CATEGORIES).doc(product.category).get();
+
+                    return {
+                        ...product,
+                        category: categorySnap.data()
+                    };
+
+                }
+            );
+
+            //return the array of promises as promise of array
+            return Promise.all(products);
+        }
+
+        catch(error) {
+
+            //log the error
+            console.log(error);
+
+            //rethrow error
+            throw new functions.https.HttpsError( 'unknown', `An error occured while fetching products.`);
+
+        }
+    }
+
+ );//getLatestProduct
+
+ //express app API
+
+ /**
+  * searchProduct
+  */
+ app.get('/searchProduct/:query', 
+    async (req, response) => {
+
+        try {
+
+            //get all categories
+            const categorySnap = await firestore.collection(COLLECTIONS.CATEGORIES).get();
+            const categories = categorySnap.docs;
+
+            //get category data
+            const categoriesData = categories.map(
+
+                doc => {
+
+                    const category = doc.data();
+
+                    return {
+                        "id": category.id,
+                        "title": category.name,
+                        "image": category.imageUrl,
+                        "description": `${category.name} in Categories`
+                    };
+
+                }
+
+            );
+
+            //get all products
+            const productSnap = await firestore.collection(COLLECTIONS.PRODUCTS).get();
+
+            //get product data from snapshot
+            const productsData = productSnap.docs.map(
+
+                doc => {
+                    
+                    const product = doc.data();
+
+                    //find category of the product
+                    const category = categories.find(cat => (cat.id === product.category)).data();
+                    
+                    return {
+                        "id": product.id,
+                        "title": product.name,
+                        "image": product.featuredImageUrl,
+                        "price": product.price,
+                        "description": product.description
+                    };
+                }
+            );
+
+            //get search term regexp from request
+            const query = new RegExp(req.params.query, 'i');
+
+            //search the entire product list for matches
+            const productRes = productsData.filter(
+
+                data => {
+
+                    //whether product name or description matches
+                    return (data.title.match(query) || data.description.match(query));
+
+                }
+            );
+
+            //search all categories
+            const categoryRes = categoriesData.filter(
+
+                data => {
+
+                    //whether category name matches
+                    return data.title.match(query);
+
+                }
+            );
+
+            const combinedRes = [...productRes, ...categoryRes];
+
+            response.send({
+                results: combinedRes
+            });
+
+        }
+
+        catch(error) {
+
+            throw new Error(`Failed to fetch data from database.`);
+            
+        }
+
+    }
+ );
+
+ //complete setting up express
+ export const api = functions.https.onRequest(app);
