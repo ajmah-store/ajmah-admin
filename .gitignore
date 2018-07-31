@@ -11,6 +11,7 @@
 # dependencies
 /node_modules
 /functions/node_modules
+/functions/private
 
 # IDEs and editors
 /.idea
